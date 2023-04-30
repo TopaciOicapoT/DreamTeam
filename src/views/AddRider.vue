@@ -16,7 +16,15 @@
             v-for="(rider, index) in ridersList"
             :key="index"
           >
-            {{ rider.rider }} {{ rider.position }}ª  -{{ rider.active }} <br>
+            {{ rider.rider }} {{ rider.position }}ª - 
+            <div v-if="rider.active" class="yes">
+              <span>Activo</span>
+
+            </div>
+            <div v-else class="no">
+              <span>Inactivo</span> <br>
+
+            </div>
             <button class="btn btn-secondary mb-2 mt-3">Modificar</button>
           </li>
         </ul>
@@ -27,6 +35,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import {useTeams} from '../stores/teams'
+
+
 
 const storeTeams = useTeams()
 const ridersList = storeTeams.riders
@@ -57,8 +67,7 @@ const handleSubmit = () => {
                 console.log("te quedas ahi")
 
             }
-            // console.log(e)
-            // console.log(rider.value)
+     
         })
     }
     Position()
@@ -67,6 +76,7 @@ const handleSubmit = () => {
 
 }
 onMounted(() => {
+  
     ridersList.sort(function (a, b) {
       return a.position - b.position;
     });
@@ -84,6 +94,18 @@ onMounted(() => {
       
       .list-group-item{
         border: 2px solid rgb(0, 0, 0) !important;
+        .yes{
+          padding: 2px;
+          color: rgb(255, 255, 255);
+          background-color: rgb(9, 70, 9);
+          
+        }
+        .no{
+          padding: 2px;
+          color: rgb(255, 255, 255);
+          background-color: red;
+
+        }
       }
     }
   }

@@ -5,14 +5,15 @@
       <div class="box">
         <h3 class="box-title">MotoGP</h3>
         <ul class="list-group">
-          <li
+            <li
             class="list-group-item"
             v-for="(rider, index) in riders"
             :key="index"
-          >
-            {{ rider.rider }} {{ rider.position }}ª <br>
-            <button class="btn btn-primary mb-2 mt-3">Añadir</button>
-          </li>
+            >
+              {{ rider.rider }} {{ rider.position }}ª <br>
+              <button v-if="rider.active" class="btn btn-primary mb-2 mt-3" :disabled="!rider.active">Añadir</button>
+            </li>
+     
         </ul>
       </div>
     </div>
@@ -40,7 +41,10 @@ riders.sort(function (a, b) {
     border-left: 1px solid gray;
 
     .box-title{
-      
+      background-color: orange;
+      border-radius: 5px;
+      padding: 10px;
+      color: black;
     }
     .list-group{
       

@@ -25,6 +25,11 @@ const router = createRouter({
         name: 'register',
         component: () => import('../views/register.vue')
     },    
+    {
+        path: '/confirmrider',
+        name: 'confirmrider',
+        component: () => import('../views/ConfirmAddRider.vue')
+    },    
 ]
 })
 

@@ -174,9 +174,9 @@ export const useTeams = defineStore('useTeams', {
         addRider (rider){
             this.riders.push(rider)
             this.riders.forEach((rider) => {
-                console.log(rider)
+                // console.log(rider)
             })
-            router.push('/createteam')
+            router.push('/confirmrider')
         }
     }
 
