@@ -33,7 +33,9 @@
        <div class="topLine"></div>
        <nav class="navBar">
          <RouterLink class="btn" to="/">INICIO</RouterLink>
-         <RouterLink class="btn" to="/Results">RESULTADOS</RouterLink>
+         <RouterLink class="btn" to="/createteam">Crear equipo</RouterLink>
+         <RouterLink class="btn" to="/register">Registrar</RouterLink>
+         <RouterLink class="btn" to="/addrider">Añadir pilotos</RouterLink>
        </nav>
        <div class="topLine"></div>
        <div class="container text-center">
@@ -41,4 +43,11 @@
        </div>
   
 </template>
+
+<style lang="scss">
+  .carousel{
+    max-height: 200px;
+    overflow: hidden;
+  }
+</style>
 
