@@ -2,16 +2,16 @@
     <h1 class="title1">DREAM TEAM</h1>
     <div class="homeBox">
         <div class="box">
-            <h3>Clasificación</h3>
+            <h3>Clasificación motoGP</h3>
             <ul class="list-group">
-            <li class="list-group-item" v-for="(resultado, index) in resultados" :key="index">{{ resultado }}</li>
+            <li class="list-group-item" >{{ totalPoint }}</li>
         </ul>
         </div>
         <div class="box">
-            <h3>opción 2</h3>
+            <h3>Clasificación moto 2</h3>
         </div>
         <div class="box">
-            <h3>opción 3</h3>
+            <h3>Clasificación moto 3</h3>
         </div>
     </div>
 
@@ -20,24 +20,20 @@
 
 <script setup>
 import '../assets/styles.scss'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useTeams } from "../stores/teams";
+const storeTeams = useTeams();
 
-
-
-
-
-    const resultados = ref([
-        "21 06/11/2022 ",
-        "20 08/11/2022  ",
-        "19 06/11/2022 ",
-        "18 08/11/2022  ",
-        "17 06/11/2022 ",
-        "16 08/11/2022  ",
-        "15 06/11/2022 ",
-        "14 08/11/2022  ",
-
-    ])
-
+const userTeam = storeTeams.userTeam;
+const totalPoint = ref(0);
+const suma = () => {
+    userTeam.forEach((rider) =>{
+        totalPoint.value += rider.newPoints
+    })
+}
+onMounted(() => {
+    suma()
+})
 </script>
 
 <style lang="scss" scoped>
