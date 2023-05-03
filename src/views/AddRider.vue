@@ -68,7 +68,7 @@
                 :key="index"
                 type="submit"
               >
-                Modificar piloto
+                Aceptar
               </button>
             </form>
           </div>
@@ -160,6 +160,7 @@ const modify = (rider) => {
     rider.newPoints= newPointsValue.value
   }
   Position(rider);
+  rider.modifyVisible = false;
 };
 onMounted(() => {
   ridersList.sort(function (a, b) {
