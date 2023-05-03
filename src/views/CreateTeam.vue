@@ -10,8 +10,8 @@
             v-for="(rider, index) in riders"
             :key="index"
             >
-              {{ rider.rider }} {{ rider.position }}ª <br> Puntos actuales: {{ rider.newPoints }} <br> Puntos iniciales: {{ rider.points }}<br>
-              <button v-show="rider.active" @click="add(rider)" v-if="rider.active" class="btn btn-primary mb-2 mt-3" :disabled="!rider.active">Añadir</button>
+              {{ rider.rider }} {{ rider.position }}ª <br> Puntos actuales: {{ rider.newPoints }} <br> Valor: {{ rider.points }}.000 $<br>
+              <button v-show="rider.active" @click="add(rider)" v-if="rider.active" class="btn btn-primary mb-2 mt-3">Añadir</button>
             </li>
      
         </ul>
@@ -20,6 +20,8 @@
     
     <div>
       <h1 class="title1">Tu equipo</h1>
+      <h2>Dineros {{ dollars }}.000  cucas.</h2>
+      <h3>Puntuación de tu  equipo: {{ totalPoint }}</h3>
       <div class="box">
         <h3 class="box-title">MotoGP</h3>
         <ul class="list-group">
@@ -29,7 +31,7 @@
             :key="index"
             >
               {{ rider.rider }} {{ rider.points }} <br>
-              <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3" :disabled="!rider.active">Eliminar</button>
+              <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">Eliminar</button>
             </li>
      
         </ul>
@@ -40,23 +42,37 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
 const storeTeams = useTeams();
-
-
+const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
 const riders = storeTeams.riders;
+const totalPoint = ref(0);
+const suma = () => {
+    userTeam.forEach((rider) =>{
+        totalPoint.value += rider.newPoints
+    })
+}
 riders.sort(function (a, b) {
   return a.position - b.position;
 });
 
 const add = (rider) =>{
-  return storeTeams.addRiderTeam(rider)
+  storeTeams.addRiderTeam(rider)
+  dollars.value = storeTeams.dollars
+  
 }
 const remove = (rider) =>{
-  return storeTeams.removeRiderTeam(rider)
+  storeTeams.removeRiderTeam(rider)
+  dollars.value = storeTeams.dollars
 }
+onMounted(()=>{
+  suma()
+  dollars.value = storeTeams.dollars
+})
+
 </script>
 
 <style lang="scss" scoped>

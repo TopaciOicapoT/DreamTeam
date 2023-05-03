@@ -4,7 +4,8 @@
         <div class="box">
             <h3>Clasificación motoGP</h3>
             <ul class="list-group">
-            <li class="list-group-item" >{{ totalPoint }}</li>
+                <!-- Una vez creada la base de datos con los usuarios apareceria aqui el usuario y la puntuación de su equipoo -->
+            <li class="list-group-item" >Mauricio Colmenero: {{ totalPoint }}</li>
         </ul>
         </div>
         <div class="box">

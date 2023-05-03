@@ -31,7 +31,14 @@
             <input :key="index" v-model="rider.newPoints" type="number" placeholder="Nueva puntuación" />
             <br />
             <input :key="index" v-model="rider.active" type="checkbox" />Activo <br />
-            <button :key="index"  type="submit">Modificar piloto</button>
+            <button @click="remove(rider)" class="btn btn-danger m-2">Eliminar piloto
+            </button> 
+            <br>
+            
+              <input v-model="confirmRemove" :key="index" type="checkbox" placeholder="Si">Eliminar 
+            
+            <br>
+            <button class="btn btn-primary m-2" :key="index"  type="submit">Modificar piloto</button>
           </form>
         </div>
         </li>
@@ -51,7 +58,8 @@ const name = ref("");
 const points = ref(null);
 const newPoints = ref(null);
 const active = ref(false);
-// const modifyVisible = ref(false)
+const confirmRemove = ref(false)
+
 const rider = {
   position: null,
   rider: "",
@@ -89,9 +97,16 @@ const desplegar = (rider) => {
   
 }
 
+const remove = (rider)=> {
+  if (confirmRemove.value) {
+    storeTeams.removeRider(rider)
+  } else {
+    alert("Confirma Eliminar piloto para eliminarlo definitivamente ")
+  }
+}
+
 const modify = (rider) => {
   newPoints.value = rider.newPoints
-  rider.newPoints = rider.points + newPoints.value;
   rider.modifyVisible = false
 };
 onMounted(() => {
