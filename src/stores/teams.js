@@ -150,9 +150,6 @@ export const useTeams = defineStore('useTeams', {
   actions: {
     addRider(rider) {
       this.riders.push(rider)
-      this.riders.forEach((rider) => {
-        // console.log(rider)
-      })
       // esto es solo para que funcione sin reiniciar la página
       router.push('/confirmrider')
     },

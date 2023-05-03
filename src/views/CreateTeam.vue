@@ -46,6 +46,7 @@ import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
 const storeTeams = useTeams();
+const ridersList = storeTeams.riders;
 const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
 const riders = storeTeams.riders;
@@ -71,6 +72,10 @@ const remove = (rider) =>{
 onMounted(()=>{
   suma()
   dollars.value = storeTeams.dollars
+  ridersList.sort( (a, b) => {
+      return a.position - b.position;
+
+  });
 })
 
 </script>
