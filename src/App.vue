@@ -36,6 +36,7 @@
          <RouterLink class="btn" to="/createteam">Crear equipo</RouterLink>
          <!-- <RouterLink class="btn" to="/register">Registrar</RouterLink> -->
          <RouterLink class="btn" to="/addrider">Añadir pilotos</RouterLink>
+         
        </nav>
        <div class="topLine"></div>
        <div class="container text-center">

@@ -53,16 +53,22 @@
                 :key="index"
                 v-model="rider.active"
                 type="checkbox"
-              />Activo <br />
-              <button @click="remove(rider)" class="btn btn-danger m-2">
+              /> Activo <br />
+              <button @click.prevent="remove" class="btn btn-danger m-2">
                 Eliminar piloto
+                <br>
               </button>
+              <div v-show="confirmRemove" class="container-sm">
+                <h2>¿Estas seguro?</h2>
+                  <button class="btn btn-primary m-2" type="button" @click="declined">No</button>
+                  <button class="btn btn-danger m-2" type="button" @click="yes(rider)">Si</button>
+              </div>
               <br />
 
-              <input v-model="confirmRemove" :key="index" type="checkbox" />
-              Eliminar
+              <!-- <input v-model="confirmRemove" :key="index" type="checkbox" />
+              Eliminar -->
 
-              <br />
+            
               <button
                 class="btn btn-primary m-2"
                 :key="index"
@@ -79,6 +85,7 @@
 </template>
 
 <script setup>
+import router from '../router/routes';
 import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
@@ -104,19 +111,11 @@ const rider = ref({
 
 const Position = () => {
     ridersList.forEach((e) => {
-      if (e.newPoints===0 || e.newPoints===null ) {
-        // console.log(e.newPoints)
-        if (rider.value.points > e.points) {
+        if (e.newPoints===null && rider.value.points > e.points ) {
           e.position++;
-          rider.value.position--;
-        } else {
-          // console.log("este lo dejamos ahi");
+          rider.value.position--;    
+          console.log(rider.value)    
         }
-        
-      } else {
-        console.log("newPoints")
-      }
-
     });
   };
 
@@ -145,13 +144,15 @@ e.modifyVisible = false;
   rider.modifyVisible = true;
 };
 
-const remove = (rider) => {
-  if (confirmRemove.value) {
-    storeTeams.removeRider(rider);
-  } else {
-    alert("Confirma Eliminar piloto para eliminarlo definitivamente ");
-  }
+const remove = () => {
+  confirmRemove.value= true
 };
+const yes = (rider)=>{
+  storeTeams.removeRider(rider);     
+}
+const declined = ()=>{
+  confirmRemove.value= false
+}
 
 const modify = (rider) => {
   if (newPointsValue.value>0) {
@@ -159,8 +160,13 @@ const modify = (rider) => {
   } else {
     rider.newPoints= newPointsValue.value
   }
-  Position(rider);
   rider.modifyVisible = false;
+  ridersList.forEach((e)=>{
+    if (rider.newPoints != null && rider.newPoints>e.newPoints && rider.position != 1) {
+      e.position++;
+      rider.position--;
+    }
+  })
 };
 onMounted(() => {
   ridersList.sort(function (a, b) {

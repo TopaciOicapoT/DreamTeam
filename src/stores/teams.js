@@ -152,6 +152,7 @@ export const useTeams = defineStore('useTeams', {
       this.riders.push(rider)
       // esto es solo para que funcione sin reiniciar la página
       router.push('/confirmrider')
+
     },
     modifyRider(rider, newPoints) {
 
@@ -162,10 +163,20 @@ export const useTeams = defineStore('useTeams', {
       const element = rider
       const index = this.riders.indexOf(element)
       this.riders.splice(index, 1)
+      router.push('/confirmdeleted')
+      this.riders.forEach((e) => {
+        e.position--;
+      })
+
+    },
+    removeRiderTeam(rider) {
+      const element = rider
+      const index = this.riders.indexOf(element)
+      this.riders.splice(index, 1)
 
     },
     addRiderTeam(rider) {
-      if (this.userTeam.length < 3) {
+      if (this.userTeam.length < 3 && this.dollars >= rider.points && !this.userTeam.includes(rider)) {
         if (!this.userTeam.includes(rider)) {
           if (this.dollars >= rider.points) {
             this.userTeam.push(rider)

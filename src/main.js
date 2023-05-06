@@ -8,5 +8,5 @@ import router from './router/routes'
 import { createPinia } from "pinia"
 
 const app = createApp(App)
-    app.use(router).use(createPinia()).mount('#app')
+app.use(router).use(createPinia()).mount('#app')
 

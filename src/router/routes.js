@@ -30,6 +30,11 @@ const router = createRouter({
         name: 'confirmrider',
         component: () => import('../views/ConfirmAddRider.vue')
     },    
+    {
+        path: '/confirmdeleted',
+        name: 'confirmdeleted',
+        component: () => import('../views/ConfirmDeleted.vue')
+    },    
 ]
 })
 

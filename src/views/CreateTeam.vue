@@ -74,7 +74,6 @@ onMounted(()=>{
   dollars.value = storeTeams.dollars
   ridersList.sort( (a, b) => {
       return a.position - b.position;
-
   });
 })
 
