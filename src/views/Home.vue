@@ -34,6 +34,7 @@ const suma = () => {
 }
 onMounted(() => {
     suma()
+    storeTeams.getTodos();
 })
 </script>
 

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router/routes';
 
@@ -6,153 +7,57 @@ export const useTeams = defineStore('useTeams', {
   state: () => ({
     userTeam: ref([]),
     dollars: ref(120),
-
-    riders: ref([
-      {
-        position: 1,
-        rider: "Marco Bezzecchi",
-        points: 64,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 2,
-        rider: "Francesco Bagnaia",
-        points: 53,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 3,
-        rider: "Álex Rins",
-        points: 47,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 4,
-        rider: "Maverick Viñales",
-        points: 45,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 5,
-        rider: "Johann Zarco",
-        points: 44,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 6,
-        rider: "Luca Marini",
-        points: 38,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 7,
-        rider: "Fabio Quartararo",
-        points: 34,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 8,
-        rider: "Álex Márquez",
-        points: 33,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 9,
-        rider: "Brad Binder",
-        points: 30,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 10,
-        rider: "Franco Morbidelli",
-        points: 29,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 11,
-        rider: "Jorge Martín",
-        points: 29,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 12,
-        rider: "Jack Miller",
-        points: 26,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 13,
-        rider: "Aleix Espargaró",
-        points: 18,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 14,
-        rider: "Miguel Oliveira",
-        points: 16,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-      {
-        position: 15,
-        rider: "Augusto Fernández",
-        points: 14,
-        newPoints: null,
-        active: true,
-        addButtonVisible: true,
-        modifyVisible: false,
-      },
-    ]),
-
-
+    riders: ref([]),
+    isLoading: ref(false),
+    isFetching: ref(false),
+    isError: ref(false),
+    data: ref(null),
+    error: ref(null),
   }),
   actions: {
+    async getTodos() {
+      this.isLoading = true;
+      try {
+        const response = await fetch(
+          "https://api.mockaroo.com/api/9794e140?count=20&key=59f73b60"
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        // Mapear los datos obtenidos desde la API al formato esperado por useTeams
+        const riders = data.map((item) => ({
+          position: item.position,
+          rider: item.rider,
+          points: item.points,
+          newPoints: null,
+          active: true,
+          addButtonVisible: true,
+          modifyVisible: false,
+        }));
+
+        this.riders  = riders;
+        this.isLoading  = false;
+        this.isFetching  = false;
+        this.isError  = false;
+        this.data  = riders;
+        this.error  = null;
+      } catch (error) {
+        console.error("Error fetching riders", error);
+        this.isLoading  = false;
+        this.isFetching  = false;
+        this.isError  = true;
+        this.data  = null;
+        this.error  = error;
+      }
+    },
     addRider(rider) {
       this.riders.push(rider)
-      // esto es solo para que funcione sin reiniciar la página
+      // esto es solo para que funcione sin reiniciar la página 
       router.push('/confirmrider')
-
     },
     modifyRider(rider, newPoints) {
 
@@ -160,14 +65,11 @@ export const useTeams = defineStore('useTeams', {
 
     },
     removeRider(rider) {
-      const element = rider
-      const index = this.riders.indexOf(element)
-      this.riders.splice(index, 1)
-      router.push('/confirmdeleted')
-      this.riders.forEach((e) => {
-        e.position--;
-      })
-
+      this.riders.splice(
+        this.riders.indexOf(rider),
+        1
+      );
+      router.push('/confirmdeleted');
     },
     removeRiderTeam(rider) {
       const element = rider
@@ -203,6 +105,5 @@ export const useTeams = defineStore('useTeams', {
       this.dollars = dolares
 
     },
-  }
-
+  },
 })
