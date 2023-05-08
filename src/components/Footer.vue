@@ -32,26 +32,10 @@ export default {
 };
 </script>
 <style scoped>
-.image-container {
-  width: 100%;
-  /* height: 300px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  padding: 10px;
-  
-}
-.image-container a-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  
-}
 .footer-col{
     padding-bottom: 20px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     font-size: 12px;
 }
 .logo {

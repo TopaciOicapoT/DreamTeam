@@ -10,9 +10,9 @@
   <a-layout class="ant-layout" >
     <a-layout-sider><VerticalNav></VerticalNav></a-layout-sider>
     <a-layout >
-      <a-layout-header class="ant-header" style="height: 20%;"><Header></Header></a-layout-header>
+      <a-layout-header class="ant-header" style="height: 250px;"><Header></Header></a-layout-header>
       <a-layout-content class="ant-layout-content"><RouterView></RouterView></a-layout-content>
-      <a-layout-footer class="ant-layout-footer"><Footer></Footer></a-layout-footer>
+      <a-layout-footer class="ant-layout-footer" style="background-color: rgba(255,255,255,0.05);"><Footer></Footer></a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
@@ -22,11 +22,8 @@
     max-height: 200px;
     overflow: hidden;
   }
-  .ant-layout {
-    height: 100vh;
-  }
   .ant-layout-footer {
-    height: 10%;
+    background-color: rgba(255,255,255,0.05);
     padding: 30px;
     overflow: hidden;
   }
