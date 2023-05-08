@@ -30,8 +30,17 @@
           <a-col :span="16">
             <a-space size="small" class="card-text">
               <a-typography-text>Age {{ rider.age }}</a-typography-text>
-              <a-typography-text>Country {{ rider.country }}</a-typography-text>
-              <a-typography-text style="max-width: 100px;" ellipsis="true">Team {{ rider.team }}</a-typography-text>
+              <!-- <a-typography-text>Country {{ rider.country }}</a-typography-text> -->
+              <a-typography-text
+                ellipsis
+                :content="`Country: ${rider.country}`"
+                style="max-width: 120px"
+              />
+              <a-typography-text
+                ellipsis
+                :content="`Team: ${rider.team}`"
+                style="max-width: 120px"
+              />
             </a-space>
           </a-col>
         </a-row>
@@ -100,11 +109,11 @@ onMounted(() => {
     flex-direction: column;
     align-items: start;
     margin-top: 0px;
-    font-size: 70%;
-    line-height: 0.8;
+    font-size: 80%;
+    line-height: 1;
   }
   .rider-card {
-    height: 100px;
+    height: 120px;
   }
 </style>
 
