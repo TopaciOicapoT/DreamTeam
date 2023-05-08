@@ -23,6 +23,7 @@
   "devDependencies": {
     "@playwright/test": "^1.33.0",
     "@vitejs/plugin-vue": "^4.2.1",
+    "dotenv": "^16.0.3",
     "npm-check-updates": "^16.10.10",
     "vite": "^4.3.5"
   }
