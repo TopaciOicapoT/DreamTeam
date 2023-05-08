@@ -8,7 +8,7 @@ export const useTeams = defineStore('useTeams', {
     userTeam: ref([]),
     dollars: ref(120),
     riders: ref([]),
-    isLoading: ref(false),
+    isLoading: false,
     isFetching: ref(false),
     isError: ref(false),
     data: ref(null),
@@ -36,7 +36,7 @@ export const useTeams = defineStore('useTeams', {
           newPoints: null,
           active: true,
           addButtonVisible: true,
-          modifyVisible: false,
+          modifyVisible: false
         }));
 
         this.riders  = riders;
