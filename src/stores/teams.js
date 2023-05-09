@@ -40,14 +40,12 @@ export const useTeams = defineStore('useTeams', {
         }));
 
         this.riders  = riders;
-        this.isLoading  = false;
         this.isFetching  = false;
         this.isError  = false;
         this.data  = riders;
         this.error  = null;
       } catch (error) {
         console.error("Error fetching riders", error);
-        this.isLoading  = false;
         this.isFetching  = false;
         this.isError  = true;
         this.data  = null;
