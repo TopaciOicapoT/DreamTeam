@@ -26,6 +26,7 @@ export const useRiders = defineStore('useRiders', {
         // this.riders = data;
         this.riders = riders;
         this.isLoading = false;
+        
       }
     },
 });

@@ -1,4 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import {useUserStore} from '../stores/user'
+const requiereAuth= async(to, from, next) => {
+    const userStore = useUserStore()
+    const user = await userStore.currentUser()
+    if (user) {
+        next()
+        
+    }else{
+        next('/login')
+    }
+}
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,22 +21,20 @@ const router = createRouter({
     {
         path: '/',
         name: 'home',
+        beforeEnter: requiereAuth,
         component: () => import('../views/Home.vue')
     },    
     {
         path: '/createteam',
         name: 'createteam',
+        beforeEnter: requiereAuth,
         component: () => import('../views/CreateTeam.vue')
     },    
     {
         path: '/addrider',
         name: 'addrider',
+        beforeEnter: requiereAuth,
         component: () => import('../views/AddRider.vue')
-    },    
-    {
-        path: '/register',
-        name: 'register',
-        component: () => import('../views/register.vue')
     },    
     {
         path: '/confirmrider',
@@ -34,6 +45,16 @@ const router = createRouter({
         path: '/confirmdeleted',
         name: 'confirmdeleted',
         component: () => import('../views/ConfirmDeleted.vue')
+    },    
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/register.vue')
+    },    
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/Login.vue')
     },    
 ]
 })

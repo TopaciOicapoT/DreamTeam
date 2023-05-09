@@ -1,12 +1,17 @@
 <template>
     <nav class="vertical-nav">
-        <RouterLink class="btn" to="/">INICIO</RouterLink>
-        <RouterLink class="btn" to="/createteam">Crear equipo</RouterLink>
-        <RouterLink class="btn" to="/addrider">Añadir pilotos</RouterLink>
+        <RouterLink v-show="userStore.userLoged" class="btn" to="/">INICIO</RouterLink>
+        <RouterLink v-show="userStore.userLoged" class="btn" to="/createteam">Crear equipo</RouterLink>
+        <RouterLink v-show="userStore.userLoged" class="btn" to="/addrider">Añadir pilotos</RouterLink>
+        <!-- <RouterLink class="btn" to="/register">Registro</RouterLink>
+        <RouterLink class="btn" to="/login">Login</RouterLink> -->
+        <button v-show="userStore.userLoged" @click="userStore.logoutUser">Logout</button>
     </nav>
 </template>
-<script>
+<script setup>
 import { RouterLink } from 'vue-router'
+import {useUserStore} from "../stores/user"
+const userStore = useUserStore()
 
 </script>
 <style>

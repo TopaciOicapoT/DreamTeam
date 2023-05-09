@@ -6,7 +6,7 @@ import router from '../router/routes';
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userTeam: ref([]),
-    dollars: ref(120),
+    dollars: ref(250),
     riders: ref([]),
     isLoading: false,
     isFetching: ref(false),
@@ -52,6 +52,8 @@ export const useTeams = defineStore('useTeams', {
         this.isError  = true;
         this.data  = null;
         this.error  = error;
+      }finally{
+        this.isLoading = false;
       }
     },
     addRider(rider) {
