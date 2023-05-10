@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router/routes';
+import TeamsMockup from "../mockups/TeamsMockup.json"
 
 export const useTeams = defineStore('useTeams', {
   state: () => ({
@@ -18,15 +19,16 @@ export const useTeams = defineStore('useTeams', {
     async getTodos() {
       this.isLoading = true;
       try {
-        const response = await fetch(
-          "https://api.mockaroo.com/api/9794e140?count=20&key=59f73b60"
-        );
+        // const response = await fetch(
+        //   "https://api.mockaroo.com/api/9794e140?count=20&key=59f73b60"
+        // );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        // if (!response.ok) {
+        //   throw new Error("Network response was not ok");
+        // }
 
-        const data = await response.json();
+        const data = TeamsMockup;
+        // const data = await response.json();
 
         // Mapear los datos obtenidos desde la API al formato esperado por useTeams
         const riders = data.map((item) => ({

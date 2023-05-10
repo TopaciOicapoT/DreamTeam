@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ridersMockup as apiEndpoint } from '../endpoints';
 import axios from 'axios';
 import { useQuery } from "@tanstack/vue-query";
-import riders from "../mockups/riders.json"
+import RidersMockup from "../mockups/RidersMockup.json"
 
 export const useRiders = defineStore('useRiders', {
   state: () => ({
@@ -24,7 +24,7 @@ export const useRiders = defineStore('useRiders', {
         //   }
         // );
         // this.riders = data;
-        this.riders = riders;
+        this.riders = RidersMockup;
         this.isLoading = false;
         
       }
