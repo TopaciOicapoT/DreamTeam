@@ -11,6 +11,7 @@
     const back = () => {
         router.push('/addrider')
     }
+    
 </script>
 
 <style lang="scss" scoped>

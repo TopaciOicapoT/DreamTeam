@@ -77,7 +77,7 @@ const ridersStore = useRiders();
 
 onMounted(() => {
   // suma()
-  // storeTeams.getTodos();
+  // storeTeams.getAllRiders();
 
   storeTeams.getTodos();
   ridersStore.fetchRiders();

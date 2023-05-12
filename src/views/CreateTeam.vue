@@ -4,10 +4,11 @@
       <h1 class="title1">Pilotos</h1>
       <div class="box">
         <h3 class="box-title">MotoGP</h3>
-        <ul class="list-group">
+        <p v-if="storeTeams.isLoading">Cargando pilotos</p>
+        <ul v-else class="list-group">
             <li
             class="list-group-item"
-            v-for="(rider, index) in riders"
+            v-for="(rider, index) in storeTeams.activeRiders"
             :key="index"
             >
               {{ rider.rider }} {{ rider.position }}ª <br> Puntos actuales: {{ rider.newPoints }} <br> Valor: {{ rider.points }}.000 $<br>
@@ -42,7 +43,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { createRenderer, onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
 const storeTeams = useTeams();
@@ -69,8 +70,13 @@ const remove = (rider) =>{
   storeTeams.removeRiderTeam(rider)
   dollars.value = storeTeams.dollars
 }
+createRenderer(()=>{
+  
+})
 onMounted(()=>{
   suma()
+  storeTeams.getRidersActives(); 
+
   dollars.value = storeTeams.dollars
   ridersList.sort( (a, b) => {
       return a.position - b.position;
