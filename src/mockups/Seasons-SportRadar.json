@@ -1,0 +1,905 @@
+{
+    "generated_at": "2023-05-12T19:07:31+00:00",
+    "schema": "https:\/\/schemas.sportradar.com\/sportsapi\/motogp\/v2\/schemas\/seasons.json",
+    "stages": [{
+        "id": "sr:stage:1030979",
+        "description": "MotoGP 2023",
+        "scheduled": "2023-03-24T10:45:00+00:00",
+        "scheduled_end": "2023-11-26T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:1042445",
+        "description": "Moto3 2023",
+        "scheduled": "2023-03-24T00:00:00+00:00",
+        "scheduled_end": "2023-11-26T20:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:1042443",
+        "description": "Moto2 2023",
+        "scheduled": "2023-03-24T00:00:00+00:00",
+        "scheduled_end": "2023-11-26T20:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:1055199",
+        "description": "Superbike 2023",
+        "scheduled": "2023-02-24T00:30:00+00:00",
+        "scheduled_end": "2023-10-15T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:987367",
+        "description": "Superbike 2022",
+        "scheduled": "2022-04-08T08:30:00+00:00",
+        "scheduled_end": "2022-11-20T06:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:971325",
+        "description": "MotoGP 2022",
+        "scheduled": "2022-03-04T12:40:00+00:00",
+        "scheduled_end": "2022-11-06T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:976271",
+        "description": "Moto2 2022",
+        "scheduled": "2022-03-04T11:45:00+00:00",
+        "scheduled_end": "2022-11-06T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:980593",
+        "description": "Moto3 2022",
+        "scheduled": "2022-03-04T10:50:00+00:00",
+        "scheduled_end": "2022-11-06T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:645942",
+        "description": "Superbike 2021",
+        "scheduled": "2021-05-21T08:30:00+00:00",
+        "scheduled_end": "2021-11-14T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:654450",
+        "description": "Moto2 2021",
+        "scheduled": "2021-03-26T11:20:00+00:00",
+        "scheduled_end": "2021-11-14T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:639576",
+        "description": "MotoGP 2021",
+        "scheduled": "2021-03-26T10:40:00+00:00",
+        "scheduled_end": "2021-11-14T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:654668",
+        "description": "Moto3 2021",
+        "scheduled": "2021-03-26T00:00:00+00:00",
+        "scheduled_end": "2021-11-14T23:55:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:555063",
+        "description": "MotoGP",
+        "scheduled": "2020-07-17T07:55:00+00:00",
+        "scheduled_end": "2020-11-22T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:559425",
+        "description": "Moto2",
+        "scheduled": "2020-03-06T11:20:00+00:00",
+        "scheduled_end": "2020-11-22T13:20:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:563747",
+        "description": "Moto3",
+        "scheduled": "2020-03-06T10:25:00+00:00",
+        "scheduled_end": "2020-11-22T12:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:568069",
+        "description": "Superbike",
+        "scheduled": "2020-02-27T23:30:00+00:00",
+        "scheduled_end": "2020-10-11T20:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:437055",
+        "description": "Moto2",
+        "scheduled": "2019-03-08T11:45:00+00:00",
+        "scheduled_end": "2019-11-17T12:20:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:441161",
+        "description": "Moto3 2019",
+        "scheduled": "2019-03-08T09:50:00+00:00",
+        "scheduled_end": "2019-11-17T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:432911",
+        "description": "MotoGP 2019",
+        "scheduled": "2019-03-07T08:00:00+00:00",
+        "scheduled_end": "2019-11-17T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:427873",
+        "description": "Superbike 2019",
+        "scheduled": "2019-02-21T22:45:00+00:00",
+        "scheduled_end": "2019-10-27T00:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:337639",
+        "description": "MotoGP 2018",
+        "scheduled": "2018-03-16T11:55:00+00:00",
+        "scheduled_end": "2018-11-18T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:333533",
+        "description": "Moto2",
+        "scheduled": "2018-03-16T10:45:00+00:00",
+        "scheduled_end": "2018-11-18T12:20:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:329427",
+        "description": "Moto3 2018",
+        "scheduled": "2018-03-16T09:50:00+00:00",
+        "scheduled_end": "2018-11-18T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:342963",
+        "description": "Superbike 2018",
+        "scheduled": "2018-02-22T23:25:00+00:00",
+        "scheduled_end": "2018-11-27T19:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:282480",
+        "description": "MotoGP 2017",
+        "scheduled": "2017-03-24T16:55:00+00:00",
+        "scheduled_end": "2017-11-12T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:283136",
+        "description": "Moto2",
+        "scheduled": "2017-03-23T15:55:00+00:00",
+        "scheduled_end": "2017-11-12T12:20:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:283138",
+        "description": "Moto3 2017",
+        "scheduled": "2017-03-23T15:00:00+00:00",
+        "scheduled_end": "2017-11-12T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:276880",
+        "description": "Superbike 2017",
+        "scheduled": "2017-02-23T22:45:00+00:00",
+        "scheduled_end": "2017-11-04T19:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:254822",
+        "description": "MotoGP",
+        "scheduled": "2016-03-17T16:55:00+00:00",
+        "scheduled_end": "2016-11-13T13:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:255696",
+        "description": "Moto2",
+        "scheduled": "2016-03-17T15:55:00+00:00",
+        "scheduled_end": "2016-11-13T11:40:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:255914",
+        "description": "Moto3",
+        "scheduled": "2016-03-17T15:00:00+00:00",
+        "scheduled_end": "2016-11-13T10:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:248886",
+        "description": "Superbike",
+        "scheduled": "2016-02-26T04:00:00+00:00",
+        "scheduled_end": "2016-10-30T19:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:231786",
+        "description": "Moto2",
+        "scheduled": "2015-03-27T08:00:00+00:00",
+        "scheduled_end": "2015-11-08T17:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:231788",
+        "description": "Moto3",
+        "scheduled": "2015-03-27T07:00:00+00:00",
+        "scheduled_end": "2015-11-08T17:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:216469",
+        "description": "MotoGP",
+        "scheduled": "2015-03-26T15:00:00+00:00",
+        "scheduled_end": "2015-11-08T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:225599",
+        "description": "Superbike",
+        "scheduled": "2015-02-20T04:00:00+00:00",
+        "scheduled_end": "2015-10-18T18:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:201800",
+        "description": "MotoGP",
+        "scheduled": "2014-03-20T16:55:00+00:00",
+        "scheduled_end": "2014-11-09T14:30:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:205726",
+        "description": "Moto2",
+        "scheduled": "2014-03-20T16:55:00+00:00",
+        "scheduled_end": "2014-11-09T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:205944",
+        "description": "Moto3",
+        "scheduled": "2014-03-20T15:00:00+00:00",
+        "scheduled_end": "2014-11-09T11:30:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:196302",
+        "description": "Superbike",
+        "scheduled": "2014-02-21T00:45:00+00:00",
+        "scheduled_end": "2014-11-02T17:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:168516",
+        "description": "Moto3",
+        "scheduled": "2013-04-04T08:00:00+00:00",
+        "scheduled_end": "2013-11-10T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:168512",
+        "description": "MotoGP",
+        "scheduled": "2013-04-04T08:00:00+00:00",
+        "scheduled_end": "2013-11-10T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:168514",
+        "description": "Moto2",
+        "scheduled": "2013-04-04T08:00:00+00:00",
+        "scheduled_end": "2013-11-10T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:177170",
+        "description": "Superbike",
+        "scheduled": "2013-02-21T23:00:00+00:00",
+        "scheduled_end": "2013-11-16T23:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2081",
+            "name": "Superbike"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:144528",
+        "description": "MotoGP",
+        "scheduled": "2012-04-05T16:55:00+00:00",
+        "scheduled_end": "2012-11-11T14:30:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:147160",
+        "description": "Moto3",
+        "scheduled": "2012-04-05T15:00:00+00:00",
+        "scheduled_end": "2012-11-11T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:145622",
+        "description": "Moto2",
+        "scheduled": "2012-04-05T14:55:00+00:00",
+        "scheduled_end": "2012-11-11T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:133751",
+        "description": "MotoGP",
+        "scheduled": "2011-03-19T23:00:00+00:00",
+        "scheduled_end": "2011-11-05T23:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:133750",
+        "description": "Moto2",
+        "scheduled": "2011-03-19T23:00:00+00:00",
+        "scheduled_end": "2011-11-05T23:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:133749",
+        "description": "125cc",
+        "scheduled": "2011-03-17T15:00:00+00:00",
+        "scheduled_end": "2011-11-06T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:123942",
+        "description": "Moto2",
+        "scheduled": "2010-04-09T18:15:00+00:00",
+        "scheduled_end": "2010-11-07T12:15:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:124050",
+        "description": "125cc",
+        "scheduled": "2010-04-09T17:00:00+00:00",
+        "scheduled_end": "2010-11-07T11:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:123835",
+        "description": "MotoGP",
+        "scheduled": "2010-04-09T17:00:00+00:00",
+        "scheduled_end": "2010-11-07T14:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:21077",
+        "description": "125cc",
+        "scheduled": "2009-04-10T08:00:00+00:00",
+        "scheduled_end": "2009-11-08T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:21076",
+        "description": "MotoGP",
+        "scheduled": "2009-04-10T05:00:00+00:00",
+        "scheduled_end": "2009-11-10T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:21078",
+        "description": "250cc 2009",
+        "scheduled": "2009-04-09T22:00:00+00:00",
+        "scheduled_end": "2009-11-08T15:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:8536",
+        "description": "125cc",
+        "scheduled": "2008-03-06T23:00:00+00:00",
+        "scheduled_end": "2008-10-25T22:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2080",
+            "name": "Moto3"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:8530",
+        "description": "MotoGP",
+        "scheduled": "2008-03-06T23:00:00+00:00",
+        "scheduled_end": "2008-10-25T22:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:8535",
+        "description": "250cc 2008",
+        "scheduled": "2008-03-06T23:00:00+00:00",
+        "scheduled_end": "2008-10-25T22:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:2079",
+            "name": "Moto2"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }, {
+        "id": "sr:stage:8307",
+        "description": "MotoGP",
+        "scheduled": "2007-03-17T23:00:00+00:00",
+        "scheduled_end": "2007-10-23T22:00:00+00:00",
+        "type": "season",
+        "category": {
+            "id": "sr:category:498",
+            "name": "MotoGP"
+        },
+        "sport": {
+            "id": "sr:sport:190",
+            "name": "Motorcycle Racing"
+        },
+        "single_event": false
+    }]
+}

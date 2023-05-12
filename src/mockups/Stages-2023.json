@@ -1,0 +1,46 @@
+"stages": [{
+    "id": "sr:stage:1030979",
+    "description": "MotoGP 2023",
+    "scheduled": "2023-03-24T10:45:00+00:00",
+    "scheduled_end": "2023-11-26T15:00:00+00:00",
+    "type": "season",
+    "category": {
+        "id": "sr:category:498",
+        "name": "MotoGP"
+    },
+    "sport": {
+        "id": "sr:sport:190",
+        "name": "Motorcycle Racing"
+    },
+    "single_event": false
+}, {
+    "id": "sr:stage:1042445",
+    "description": "Moto3 2023",
+    "scheduled": "2023-03-24T00:00:00+00:00",
+    "scheduled_end": "2023-11-26T20:00:00+00:00",
+    "type": "season",
+    "category": {
+        "id": "sr:category:2080",
+        "name": "Moto3"
+    },
+    "sport": {
+        "id": "sr:sport:190",
+        "name": "Motorcycle Racing"
+    },
+    "single_event": false
+}, {
+    "id": "sr:stage:1042443",
+    "description": "Moto2 2023",
+    "scheduled": "2023-03-24T00:00:00+00:00",
+    "scheduled_end": "2023-11-26T20:00:00+00:00",
+    "type": "season",
+    "category": {
+        "id": "sr:category:2079",
+        "name": "Moto2"
+    },
+    "sport": {
+        "id": "sr:sport:190",
+        "name": "Motorcycle Racing"
+    },
+    "single_event": false
+}]
