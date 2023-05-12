@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import { defineStore } from 'pinia';
 import { auth } from '../FirebaseConfi';
 import router from '../router/routes';
-
+import {useTeams} from './teams'
 
 
 
@@ -51,6 +51,8 @@ export const useUserStore = defineStore("userStore", {
 
         },
         async logoutUser(){
+            const teamsDataBase = useTeams()
+            teamsDataBase.$reset()
             try {
                 await signOut(auth);
                 this.userData = null;
