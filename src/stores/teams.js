@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router/routes';
 import TeamsMockup from "../mockups/TeamsMockup.json"
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where } from 'firebase/firestore/lite';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore/lite';
 import { auth, db } from '../FirebaseConfi';
 
 export const useTeams = defineStore('useTeams', {
@@ -55,6 +55,7 @@ export const useTeams = defineStore('useTeams', {
             id: doc.id,
             ...doc.data()
           })
+          
          
         })
       } catch (error) {
@@ -123,9 +124,21 @@ export const useTeams = defineStore('useTeams', {
       // esto es solo para que funcione sin reiniciar la página 
       // router.push('/confirmrider')
     },
-    modifyRider(rider, newPoints) {
-
-      this.riders[rider].newPoints = newPoints
+    async updateRiders(rider) {
+      try {
+        const rd = {rider, admin: auth.currentUser.uid }
+        
+        const docRef = await addDoc(collection(db, "ridersDataBase"), rd)
+        
+  
+        this.allRiders.push({
+          ...rd,
+          id: docRef.id
+        })
+      } catch (error) {
+        console.log(error)
+      }
+      
 
     },
     async removeRider(id) {

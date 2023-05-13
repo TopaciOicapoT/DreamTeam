@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <form @submit.prevent="handleSubmit">
+    <form class="formulario" @submit.prevent="handleSubmit">
       <input v-model="name" type="text" placeholder="Piloto" /> <br />
       <input v-model="points" type="number" placeholder="Puntuación" />
       <br />
@@ -17,10 +17,10 @@
             v-for="(rider, index) in ridersList"
             :key="index"
           >
-            {{ rider?.rider }} <br />
-            {{ rider?.position }} ª <br />
-            ID: {{ rider.id }} <br>
-            idAdmin:    {{ rider.admin }}
+            {{ rider.rider.name }} <br />
+            {{ rider.rider.position }} <br />
+            ID: {{ rider.rider.id }} <br>
+            idAdmin: {{ rider.admin }}
             <div v-if="rider.active" class="yes">
               <span>Activo</span>
             </div>
@@ -34,28 +34,6 @@
             </button>
             <div v-show="rider.modifyVisible">
               <form @submit.prevent="modify(rider)">
-                <span> Nombre del piloto: </span>
-                <br />
-                <input
-                  class="inputModifi"
-                  :key="index"
-                  v-model="rider.rider"
-                  type="text"
-                  placeholder="Nombre del piloto"
-                />
-                <br />
-                <span> Nueva Puntuación: </span>
-                <br />
-                <input
-                  class="inputModifi"
-                  :key="index"
-                  v-model="newPointsValue"
-                  type="number"
-                  placeholder="Nueva puntuación"
-                />
-                <br />
-                <input :key="index" v-model="rider.active" type="checkbox" />
-                Activo <br />
                 <button @click.prevent="remove" class="btn btn-danger m-2">
                   Eliminar piloto
                   <br />
@@ -88,13 +66,19 @@
         </ul>
       </div>
     </div>
+    <div>
+      <button @click="padentro">Llenar base de datos</button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
-
+import {dataRiders} from '../test/const'
+// import {useRoute} from 'vue-router'
+// const route = useRoute()
+// console.log(route.params)
 const storeTeams = useTeams();
 const ridersList = storeTeams.allRiders;
 
@@ -119,14 +103,6 @@ const rider = ref({
   description: "",
 });
 
-// const Position = () => {
-//   ridersList.forEach((e) => {
-//     if (e.newPoints === null && rider.value.points > e.points) {
-//       e.position++;
-//       rider.value.position--;
-//     }
-//   });
-// };
 
 const handleSubmit = () => {
   newPointsValue.value = null;
@@ -166,26 +142,18 @@ const ocultar = (rider)=>{
   newPointsValue.value = null;
   rider.modifyVisible = false;
 }
+const Riders = dataRiders
+
+const padentro = async() =>{
+  Riders.forEach( async(rider)=>{
+    await storeTeams.updateRiders(rider)
+    
+  })
+}
 
 
-// const modify = (rider) => {
-//   if (newPointsValue.value > 0) {
-//     rider.newPoints += newPointsValue.value;
-//   } else {
-//     rider.newPoints = newPointsValue.value;
-//   }
-//   rider.modifyVisible = false;
-//   ridersList.forEach((e) => {
-//     if (
-//       rider.newPoints != null &&
-//       rider.newPoints > e.newPoints &&
-//       rider.position != 1
-//     ) {
-//       e.position++;
-//       rider.position--;
-//     }
-//   });
-// };
+
+
 onMounted(() => {
   storeTeams.getAllRiders();
   storeTeams.allRiders.sort(function (a, b) {
@@ -195,6 +163,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.formulario{
+  color: white;
+}
 .box {
   padding: 1rem;
   border-right: 1px solid gray;
