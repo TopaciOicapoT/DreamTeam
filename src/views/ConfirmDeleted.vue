@@ -1,16 +1,15 @@
 <template>
     <div class="box">
         <h1>Ya no veras mas a ese piloto 👌</h1>
-        <button @click="back">Vale pues vamonos</button>
+        <button @click="router.push(`/addrider`)">Vale pues vamonos</button>
     </div>
 </template>
 
 <script setup>
-    import router from '../router/routes'
+import {useRouter} from 'vue-router'
+const router = useRouter()
 
-    const back = () => {
-        router.push('/addrider')
-    }
+
     
 </script>
 
