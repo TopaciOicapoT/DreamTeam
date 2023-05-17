@@ -8,11 +8,11 @@
         <ul v-else class="list-group">
             <li
             class="list-group-item"
-            v-for="(rider, index) in storeTeams.activeRiders"
+            v-for="(rider, index) in ridersList"
             :key="index"
             >
-              {{ rider.rider }} {{ rider.position }}ª <br> Puntos actuales: {{ rider.newPoints }} <br> Valor: {{ rider.points }}.000 $<br>
-              <button v-show="rider.active" @click="add(rider)" v-if="rider.active" class="btn btn-primary mb-2 mt-3">Añadir</button>
+              {{ rider.rider.name }}<br> Valor: {{ rider.rider.value }}.000 $<br>
+              <button @click="add(rider)"  class="btn btn-primary mb-2 mt-3">Añadir</button>
             </li>
      
         </ul>
@@ -47,7 +47,7 @@ import { createRenderer, onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
 const storeTeams = useTeams();
-const ridersList = storeTeams.riders;
+const ridersList = storeTeams.allRiders;
 const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
 const riders = storeTeams.riders;
@@ -73,9 +73,12 @@ const remove = (rider) =>{
 createRenderer(()=>{
   
 })
-onMounted(()=>{
+onMounted(async()=>{
   suma()
-  storeTeams.getRidersActives(); 
+  if (storeTeams.allRiders.length === 0) {
+    
+    storeTeams.getAllRiders(); 
+  }
 
   dollars.value = storeTeams.dollars
   ridersList.sort( (a, b) => {

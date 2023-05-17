@@ -11,7 +11,8 @@ export const useUserStore = defineStore("userStore", {
     state: () => ({
         userData: null,
         loadingUser: false,
-        userLoged: false
+        userLoged: false,
+        userId: null
     }),
     actions: {
         async registerUser(email, password) {
@@ -39,6 +40,7 @@ export const useUserStore = defineStore("userStore", {
                     email: user.email,
                     uid: user.uid
                 }
+                
                 router.push("/")
             } catch (error) {
                 const errorCode = error.code;
@@ -74,6 +76,7 @@ export const useUserStore = defineStore("userStore", {
                             email: user.email,
                             uid: user.uid
                         }
+                        this.userId=auth.currentUser.uid
                         this.userLoged= true
                     } else {
                         this.userData= null

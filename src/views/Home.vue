@@ -18,12 +18,6 @@
         <a-typography-text>Active: {{rider.active}}</a-typography-text> -->
 
 <template>
-  <div v-if="uid === 'BHneJ9GYwhXDqITGfr3aeyD2zAB3'">
-    <button @click="router.push(`/addrider`)">Acceder</button> <br>
-    <span>Esto de aqui solo es visible para los admin, en este caso seriamos nosotros ya que esta gente no van a tener que hacer nada con la página, lo pondriamos en la barra lateral pero lo dejo aqui para escribirte el tochito </span>
-
-  </div>
-
   <h1 class="title1">DREAM TEAM</h1>
   <div v-if="!ridersStore.isLoading" class="grid-container">
     <div v-for="(rider, index) in ridersStore.riders" :key="index" class="card">
@@ -64,18 +58,18 @@
 </template>
 <script setup>
 import "../assets/styles.scss";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useRiders } from "../stores/riders";
-import {useRouter} from 'vue-router'
 import { useTeams } from "../stores/teams";
-import { CheckCircleFilled } from "@ant-design/icons-vue";
-import { auth } from "../FirebaseConfi";
+
 const storeTeams = useTeams();
 const ridersStore = useRiders();
-const router = useRouter()
-const uid = auth.currentUser.uid
 
 onMounted(() => {
+  if (storeTeams.allRiders.length === 0) {
+
+    storeTeams.getAllRiders(); 
+  }
   storeTeams.getTodos();
   ridersStore.fetchRiders(); 
 });

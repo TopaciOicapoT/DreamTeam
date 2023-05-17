@@ -105,58 +105,15 @@ export const useTeams = defineStore('useTeams', {
         this.isLoading = false;
       }
     },
-    async addRider(rider) {
-      try {
-        const rd = {...rider, admin: auth.currentUser.uid }
-        
-        const docRef = await addDoc(collection(db, "ridersDataBase"), rd)
-        
-  
-        this.allRiders.push({
-          ...rd,
-          id: docRef.id
-        })
-        console.log(docRef.id)
-
-      } catch (error) {
-        console.log(error)
-      }
-      // esto es solo para que funcione sin reiniciar la página 
-      // router.push('/confirmrider')
-    },
     async updateRiders(rider) {
       try {
-        const rd = {rider, admin: auth.currentUser.uid }
-        
-        const docRef = await addDoc(collection(db, "ridersDataBase"), rd)
-        
-  
-        this.allRiders.push({
-          ...rd,
-          id: docRef.id
-        })
+        let rd = {rider}        
+        await setDoc(doc(db, "ridersDataBase", rd.rider.name), rd)
       } catch (error) {
         console.log(error)
       }
       
 
-    },
-    async removeRider(id) {
-      try {
-        const docRef = doc(db, "ridersDataBase", id);
-        const docSpan = await getDoc(docRef)
-        if (!docSpan.exists()) {
-          throw new Error("No existe el piloto")
-        }
-        if (docSpan.data().admin !== auth.currentUser.uid)  {
-          throw new Error("No tienes autorización para modificar o eliminar pilotos")
-        }
-        await deleteDoc(docRef);
-        this.allRiders = this.allRiders.filter(item => item.id !== id);
-      } catch (error) {
-        console.log(error.message)
-      }
-      router.push('/confirmdeleted')
     },
     removeRiderTeam(rider) {
       const element = rider
