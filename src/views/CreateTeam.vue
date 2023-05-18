@@ -11,7 +11,7 @@
             v-for="(rider, index) in ridersList"
             :key="index"
             >
-              {{ rider.rider.name }}<br> Valor: {{ rider.rider.value }}.000 $<br>
+              {{ rider.rider?.name }}<br> Valor: {{ rider.rider?.value }}.000 $<br>
               <button @click="add(rider)"  class="btn btn-primary mb-2 mt-3">Añadir</button>
             </li>
      
@@ -31,7 +31,7 @@
             v-for="(rider, index) in userTeam"
             :key="index"
             >
-              {{ rider.rider }} {{ rider.points }} <br>
+              {{ rider?.rider }} {{ rider?.points }} <br>
               <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">Eliminar</button>
             </li>
      

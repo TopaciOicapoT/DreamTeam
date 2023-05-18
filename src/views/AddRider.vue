@@ -1,5 +1,6 @@
 <template>
     <div>
+
       <button @click="padentro">Actuallizar pilotos</button>
     </div>
 
@@ -7,27 +8,27 @@
     <div v-for="(rider, index) in ridersList" :key="index" class="card">
       <a-card
         style="display: block"
-        :title="rider.rider.name"
+        :title="rider.rider?.name"
         size="small"
         class="rider-card"
-        :extra="`Value: ${rider.rider.value}`"
+        :extra="`Value: ${rider.rider?.value}`"
       >
         <a-row>
           <a-col :span="6">
-            <a-avatar shape="square" :src="rider.rider.photo" :size="25"> </a-avatar>
+            <a-avatar shape="square" :src="rider.rider?.photo" :size="25"> </a-avatar>
           </a-col>
           <a-col :span="16">
             <a-space size="small" class="card-text">
-              <a-typography-text>Age {{ rider.rider.age }}</a-typography-text>
-              <a-typography-text>Country {{ rider.rider.country }}</a-typography-text>
+              <a-typography-text>Age {{ rider.rider?.age }}</a-typography-text>
+              <a-typography-text>Country {{ rider.rider?.country }}</a-typography-text>
               <a-typography-text
                 ellipsis
-                :content="`Country: ${rider.rider.country}`"
+                :content="`Country: ${rider.rider?.country}`"
                 style="max-width: 120px"
               />
               <a-typography-text
                 ellipsis
-                :content="`Team: ${rider.rider.team}`"
+                :content="`Team: ${rider.rider?.team}`"
                 style="max-width: 120px"
               />
             </a-space>
@@ -49,10 +50,9 @@ import { useRiders } from "../stores/riders";
 const storeTeams = useTeams();
 const ridersList = storeTeams.allRiders;
 const ridersStore = useRiders()
-const Riders = ridersStore.riders
 
 const padentro =() =>{
-  Riders.forEach( async(rider)=>{
+  ridersStore.riders.forEach( async(rider)=>{
     await storeTeams.updateRiders(rider)  
   })
 }
@@ -62,12 +62,9 @@ const padentro =() =>{
 
 onMounted(async() => {
   if (storeTeams.allRiders.length === 0) {
- 
-    storeTeams.getAllRiders(); 
+    ridersStore.fetchRiders();
+    await storeTeams.getAllRiders(); 
   }
-  storeTeams.allRiders.sort(function (a, b) {
-    return a.value - b.value;
-  });
 });
 </script>
 
