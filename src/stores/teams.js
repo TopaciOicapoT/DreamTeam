@@ -9,10 +9,10 @@ import { auth, db } from '../FirebaseConfi';
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userTeam: ref([]),
+    confirmAddRiderTeam: true,
     dollars: ref(250),
     riders: ref([]),
     allRiders: [],
-    activeRiders: [],
     isLoading: false,
     isFetching: ref(false),
     isError: ref(false),
@@ -98,11 +98,14 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     addRiderTeam(rider) {
-      if (this.userTeam.length < 3 && this.dollars >= rider.points && !this.userTeam.includes(rider)) {
-        if (!this.userTeam.includes(rider)) {
-          if (this.dollars >= rider.points) {
-            this.userTeam.push(rider)
-            const dolares = this.dollars - rider.points
+      this.confirmAddRiderTeam= false
+      if (this.userTeam.length < 3) {
+        if (!this.userTeam.includes(rider.rider)) {
+          if (this.dollars >= rider.rider.value) {
+            this.userTeam.push(rider.rider)
+            const dolares = this.dollars - rider.rider.value
+            this.confirmAddRiderTeam= true
+            
             return this.dollars = dolares
 
           } else {
@@ -121,7 +124,7 @@ export const useTeams = defineStore('useTeams', {
       const element = rider
       const index = this.userTeam.indexOf(element)
       this.userTeam.splice(index, 1)
-      const dolares = this.dollars + rider.points
+      const dolares = this.dollars + rider.value
       this.dollars = dolares
 
     },

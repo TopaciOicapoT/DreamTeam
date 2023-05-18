@@ -31,7 +31,7 @@
             v-for="(rider, index) in userTeam"
             :key="index"
             >
-              {{ rider?.rider }} {{ rider?.points }} <br>
+              {{ rider?.name }} {{ rider?.value }} <br>
               <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">Eliminar</button>
             </li>
      
@@ -52,38 +52,38 @@ const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
 const riders = storeTeams.riders;
 const totalPoint = ref(0);
-const suma = () => {
-    userTeam.forEach((rider) =>{
-        totalPoint.value += rider.newPoints
+const listPoints = []
+const suma = (rider) => {
+    listPoints.push(rider.rider.value)
+    totalPoint.value = rider.rider.value
+    listPoints.reduce((a, b)=> {
+     
+      return totalPoint.value = a+b;
     })
-}
-riders.sort(function (a, b) {
-  return a.position - b.position;
-});
-
+    
+  }
 const add = (rider) =>{
   storeTeams.addRiderTeam(rider)
   dollars.value = storeTeams.dollars
-  
+  if (storeTeams.confirmAddRiderTeam) {
+    suma(rider)
+  }
 }
 const remove = (rider) =>{
+  let element = rider
+  let index = userTeam.indexOf(element)
+  console.log(index)
+  totalPoint.value -= rider.value
   storeTeams.removeRiderTeam(rider)
+  listPoints.splice(index, 1)
   dollars.value = storeTeams.dollars
-}
-createRenderer(()=>{
   
-})
+}
 onMounted(async()=>{
-  suma()
-  if (storeTeams.allRiders.length === 0) {
-    
+  if (storeTeams.allRiders.length === 0) {  
     storeTeams.getAllRiders(); 
   }
-
   dollars.value = storeTeams.dollars
-  ridersList.sort( (a, b) => {
-      return a.position - b.position;
-  });
 })
 
 </script>
