@@ -20,28 +20,6 @@ export const useTeams = defineStore('useTeams', {
     error: ref(null),
   }),
   actions: {
-    async getRidersActives() {
-      if (this.activeRiders.length !== 0) {
-        return;
-      }
-      this.isLoading = true;
-      try {
-        const q = query(collection(db, 'ridersDataBase'),
-          where("active", "==", true))
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach(doc => {
-          this.activeRiders.push({
-            id: doc.id,
-            ...doc.data()
-          })
-          console.log(doc.id, doc.data())
-        })
-      } catch (error) {
-        console.log(error)
-      } finally {
-        this.isLoading = false
-      }
-    },
     async getAllRiders() {
       if (this.allRiders.length !== 0) {
         return;
@@ -63,6 +41,20 @@ export const useTeams = defineStore('useTeams', {
       } finally {
         this.isLoading = false
       }
+    },
+    async updateRiders(rider) {
+      try {
+        let rd = {rider} 
+        console.log(rd.rider.id)       
+        await setDoc(doc(db, "ridersDataBase", rd.rider.name), rd)
+      } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+      }
+      
+
     },
 
     async getTodos() {
@@ -104,22 +96,6 @@ export const useTeams = defineStore('useTeams', {
       } finally {
         this.isLoading = false;
       }
-    },
-    async updateRiders(rider) {
-      try {
-        let rd = {rider}        
-        await setDoc(doc(db, "ridersDataBase", rd.rider.name), rd)
-      } catch (error) {
-        console.log(error)
-      }
-      
-
-    },
-    removeRiderTeam(rider) {
-      const element = rider
-      const index = this.riders.indexOf(element)
-      this.riders.splice(index, 1)
-
     },
     addRiderTeam(rider) {
       if (this.userTeam.length < 3 && this.dollars >= rider.points && !this.userTeam.includes(rider)) {
