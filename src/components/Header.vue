@@ -19,8 +19,8 @@
 <script>
 import axios from "axios";
 import { useQuery } from "@tanstack/vue-query";
-import { SearchPexels as apiEndpoint } from "/src/endpoints.js";
-import { PEXELS_API_KEY as apiKey } from "/secrets.js";
+import { SearchPexels as apiEndpoint } from "../Services/endpoints.js";
+import { PEXELS_API_KEY as apiKey } from "../../secrets.js";
 export default {
   name: "Header",
   data() {
