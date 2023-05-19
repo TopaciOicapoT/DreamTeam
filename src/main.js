@@ -7,7 +7,22 @@ import { createPinia } from "pinia"
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import { VueFire, VueFireAuth } from 'vuefire'
+import { firebaseApp } from './Services/FirebaseService'
 
 const app = createApp(App)
-app.use(router).use(VueQueryPlugin).use(Antd).use(createPinia());
+app
+    .use(router)
+    .use(VueQueryPlugin)
+    .use(Antd)
+    .use(createPinia())
+    .use(VueFire, {
+        // imported above but could also just be created here
+        firebaseApp,
+        modules: [
+        // we will see other modules later on
+        VueFireAuth(),
+        ],
+    });
+
 app.mount("#app");
