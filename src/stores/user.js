@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { defineStore } from 'pinia';
-import { auth } from '../FirebaseConfi';
+import { auth } from '../Services/FirebaseService';
 import router from '../router/routes';
 import {useTeams} from './teams'
 

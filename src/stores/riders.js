@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ridersMockup as apiEndpoint } from '../endpoints';
+// import { ridersMockup as apiEndpoint } from '../endpoints';
 import axios from 'axios';
 import { useQuery } from "@tanstack/vue-query";
 import RidersMockup from "../mockups/RidersMockup.json"

@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import router from '../router/routes';
 import TeamsMockup from "../mockups/TeamsMockup.json"
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore/lite';
-import { auth, db } from '../FirebaseConfi';
+import { auth, db } from '../Services/FirebaseService';
 
 export const useTeams = defineStore('useTeams', {
   state: () => ({
