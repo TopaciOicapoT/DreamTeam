@@ -8,7 +8,7 @@
         <ul v-else class="list-group">
             <li
             class="list-group-item"
-            v-for="(rider, index) in ridersList"
+            v-for="(rider, index) in allRiders"
             :key="index"
             >
               {{ rider.rider?.name }}<br> Valor: {{ rider.rider?.value }}.000 $<br>
@@ -46,6 +46,11 @@
 import { createRenderer, onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 
+
+import { useCollection } from 'vuefire'
+import { collection } from 'firebase/firestore'
+import { db } from "../Services/FirebaseService";
+const allRiders = useCollection(collection(db, 'ridersDataBase'))
 const storeTeams = useTeams();
 const ridersList = storeTeams.allRiders;
 const dollars = ref(0)
@@ -72,7 +77,6 @@ const add = (rider) =>{
 const remove = (rider) =>{
   let element = rider
   let index = userTeam.indexOf(element)
-  console.log(index)
   totalPoint.value -= rider.value
   storeTeams.removeRiderTeam(rider)
   listPoints.splice(index, 1)

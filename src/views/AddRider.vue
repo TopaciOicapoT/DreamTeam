@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="!ridersStore.isLoading" class="grid-container">
-    <div v-for="(rider, index) in ridersList" :key="index" class="card">
+    <div v-for="(rider, index) in todos" :key="index" class="card">
       <a-card
         style="display: block"
         :title="rider.rider?.name"
@@ -47,13 +47,35 @@
 import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 import { useRiders } from "../stores/riders";
+
+import { doc, setDoc } from 'firebase/firestore'
+import { db, todos } from "../Services/FirebaseService";
+
 const storeTeams = useTeams();
-const ridersList = storeTeams.allRiders;
 const ridersStore = useRiders()
 
+const updateRiders = async() => {
+
+    try {
+      ridersStore.riders.forEach( async(rider)=>{
+        let rd = {rider} 
+        let riderId=rd.rider.id.toString() 
+
+        await setDoc(doc(db, "ridersDataBase", riderId), rd)
+
+      })
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode)
+      console.log("upDateRiders ", errorMessage)
+    }
+    
+
+  } 
 const padentro =() =>{
   ridersStore.riders.forEach( async(rider)=>{
-    await storeTeams.updateRiders(rider)  
+    await updateRiders(rider)  
   })
 }
 

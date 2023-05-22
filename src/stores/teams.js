@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import router from '../router/routes';
 import TeamsMockup from "../mockups/TeamsMockup.json"
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore/lite';
-import { auth, db } from '../Services/FirebaseService';
+import { auth, db, todos } from '../Services/FirebaseService';
 
 export const useTeams = defineStore('useTeams', {
   state: () => ({
@@ -26,16 +26,20 @@ export const useTeams = defineStore('useTeams', {
       }
       this.isLoading = true;
       try {
-        const q = query(collection(db, 'ridersDataBase'))
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach(doc => {
-          this.allRiders.push({
-            id: doc.id,
-            ...doc.data()
-          })
-          
-         
+        // const q = query(collection(db, 'ridersDataBase'))
+        // const querySnapshot = await getDocs(q);
+        // querySnapshot.forEach(doc => {
+        //   this.allRiders.push({
+        //     id: doc.id,
+        //     ...doc.data()
+          // })
+        // })
+        this.allRiders.push(todos)
+        this.allRiders.forEach((rider)=>{
+          console.log(rider)
+
         })
+
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
