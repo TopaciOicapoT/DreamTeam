@@ -18,6 +18,7 @@ export const useTeams = defineStore('useTeams', {
     isError: ref(false),
     data: ref(null),
     error: ref(null),
+    allRidersTodo: todos
   }),
   actions: {
     async getAllRiders() {
@@ -34,10 +35,8 @@ export const useTeams = defineStore('useTeams', {
         //     ...doc.data()
           // })
         // })
-        this.allRiders.push(todos)
-        this.allRiders.forEach((rider)=>{
-          console.log(rider)
-
+        this.allRidersTodo.forEach((rider)=>{
+          this.allRiders.push(rider.rider)
         })
 
       } catch (error) {
@@ -48,21 +47,23 @@ export const useTeams = defineStore('useTeams', {
       } finally {
         this.isLoading = false
       }
-    },
-    async updateRiders(rider) {
-      try {
-        let rd = {rider} 
-        let riderId=rd.rider.id.toString()      
-        await setDoc(doc(db, "ridersDataBase", riderId), rd)
-      } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode)
-        console.log("upDateRiders ", errorMessage)
-      }
-      
+      this.allRiders.sort(function (a, b){
 
+        return b.value - a.value
+      })
     },
+    // async updateRiders(rider) {
+    //   try {
+    //     let rd = {rider} 
+    //     let riderId=rd.rider.id.toString()      
+    //     await setDoc(doc(db, "ridersDataBase", riderId), rd)
+    //   } catch (error) {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     console.log(errorCode)
+    //     console.log("upDateRiders ", errorMessage)
+    //   }
+    // },
 
     async getTodos() {
       this.isLoading = true;
@@ -105,12 +106,13 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     addRiderTeam(rider) {
+      console.log(rider)
       this.confirmAddRiderTeam= false
       if (this.userTeam.length < 3) {
-        if (!this.userTeam.includes(rider.rider)) {
-          if (this.dollars >= rider.rider.value) {
-            this.userTeam.push(rider.rider)
-            const dolares = this.dollars - rider.rider.value
+        if (!this.userTeam.includes(rider)) {
+          if (this.dollars >= rider.value) {
+            this.userTeam.push(rider)
+            const dolares = this.dollars - rider.value
             this.confirmAddRiderTeam= true
             
             return this.dollars = dolares
@@ -128,6 +130,7 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     removeRiderTeam(rider) {
+      console.log(rider.value)
       const element = rider
       const index = this.userTeam.indexOf(element)
       this.userTeam.splice(index, 1)

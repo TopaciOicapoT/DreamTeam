@@ -8,10 +8,10 @@
         <ul v-else class="list-group">
             <li
             class="list-group-item"
-            v-for="(rider, index) in allRiders"
+            v-for="(rider, index) in storeTeams.allRiders"
             :key="index"
             >
-              {{ rider.rider?.name }}<br> Valor: {{ rider.rider?.value }}.000 $<br>
+              {{ rider?.name }}<br> Valor: {{ rider?.value }}.000 $<br>
               <button @click="add(rider)"  class="btn btn-primary mb-2 mt-3">Añadir</button>
             </li>
      
@@ -52,15 +52,15 @@ import { collection } from 'firebase/firestore'
 import { db } from "../Services/FirebaseService";
 const allRiders = useCollection(collection(db, 'ridersDataBase'))
 const storeTeams = useTeams();
-const ridersList = storeTeams.allRiders;
+
 const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
 const riders = storeTeams.riders;
 const totalPoint = ref(0);
 const listPoints = []
 const suma = (rider) => {
-    listPoints.push(rider.rider.value)
-    totalPoint.value = rider.rider.value
+    listPoints.push(rider.value)
+    totalPoint.value = rider.value
     listPoints.reduce((a, b)=> {
      
       return totalPoint.value = a+b;
