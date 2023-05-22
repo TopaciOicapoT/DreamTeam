@@ -11,18 +11,17 @@ import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './Services/FirebaseService'
 
 const app = createApp(App)
-app
-    .use(router)
-    .use(VueQueryPlugin)
-    .use(Antd)
-    .use(createPinia())
-    .use(VueFire, {
-        // imported above but could also just be created here
-        firebaseApp,
-        modules: [
-        // we will see other modules later on
-        VueFireAuth(),
-        ],
-    });
+app.use(router);
+app.use(VueQueryPlugin)
+app.use(Antd)
+app.use(createPinia())
+app.use(VueFire, {
+    // imported above but could also just be created here
+    firebaseApp,
+    modules: [
+    // we will see other modules later on
+    VueFireAuth(),
+    ],
+});
 
 app.mount("#app");
