@@ -37,7 +37,10 @@ export const useTeams = defineStore('useTeams', {
          
         })
       } catch (error) {
-        console.log(error)
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        console.log("getAllRiders " , errorMessage)
       } finally {
         this.isLoading = false
       }
@@ -45,13 +48,13 @@ export const useTeams = defineStore('useTeams', {
     async updateRiders(rider) {
       try {
         let rd = {rider} 
-        console.log(rd.rider.id)       
-        await setDoc(doc(db, "ridersDataBase", rd.rider.name), rd)
+        let riderId=rd.rider.id.toString()      
+        await setDoc(doc(db, "ridersDataBase", riderId), rd)
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode)
-        console.log(errorMessage)
+        console.log("upDateRiders ", errorMessage)
       }
       
 
