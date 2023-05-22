@@ -1,26 +1,7 @@
-<!-- <template>
-          <CheckCircleFilled v-if="rider.active" />
-          <span v-else>INACTIVO</span>
-        </template> -->
-<!-- <div  v-if="!storeTeams.isLoading" class="grid-container">
-          <div v-for="(rider, index) in storeTeams.riders" :key="index" class="card">
-            <a-card style="display:block" :title="rider.rider">
-              <a-space direction="vertical">
-                <a-typography-text>Position: {{rider.position}}</a-typography-text>
-                <a-typography-text>Points: {{rider.points}}</a-typography-text>
-                <a-typography-text>Active: {{rider.active}}</a-typography-text>
-              </a-space>
-            </a-card>
-          </div>
-        </div> -->
-<!-- <a-typography-text>Position: {{rider.position}}</a-typography-text>
-        <a-typography-text>Points: {{rider.points}}</a-typography-text>
-        <a-typography-text>Active: {{rider.active}}</a-typography-text> -->
-
 <template>
   <h1 class="title1">DREAM TEAM</h1>
-  <div v-if="!ridersStore.isLoading" class="grid-container">
-    <div v-for="(rider, index) in storeTeams.allRiders" :key="index" class="card">
+  <div class="grid-container">
+    <div v-for="({rider}, index) in riders" :key="index" class="card">
       <a-card
         style="display: block"
         :title="rider?.name"
@@ -35,7 +16,6 @@
           <a-col :span="16">
             <a-space size="small" class="card-text">
               <a-typography-text>Age {{ rider?.age }}</a-typography-text>
-              <!-- <a-typography-text>Country {{ rider.country }}</a-typography-text> -->
               <a-typography-text
                 ellipsis
                 :content="`Country: ${rider?.country}`"
@@ -52,27 +32,17 @@
       </a-card>
     </div>
   </div>
-  <div v-else>
-    <a-card loading="true" style="display: block"> </a-card>
-  </div>
 </template>
 <script setup>
 import "../assets/styles.scss";
-import { onMounted } from "vue";
-import { useRiders } from "../stores/riders";
-import { useTeams } from "../stores/teams";
+import { useCollection } from 'vuefire'
+import { collection } from 'firebase/firestore'
+import { useFirestore } from 'vuefire'
 
-const storeTeams = useTeams();
-const ridersStore = useRiders();
+// Inicializo riders
+const db = useFirestore()
+const riders = useCollection(collection(db, 'ridersDataBase'))
 
-onMounted(() => {
-  if (storeTeams.allRiders.length === 0) {
-
-    storeTeams.getAllRiders(); 
-  }
-  storeTeams.getTodos();
-  ridersStore.fetchRiders(); 
-});
 </script>
 
 <style lang="scss" scoped>
