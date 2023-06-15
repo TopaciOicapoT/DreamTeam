@@ -13,7 +13,7 @@ export const firebaseApp = initializeApp({
 
 const auth = getAuth();
 const db = getFirestore(firebaseApp)
-const todos = useCollection(collection(db, 'ridersDataBase'))
+const MotoGp = useCollection(collection(db, 'summaryMotoGp'))
 
-export { auth, db, todos };
-export const todosRef = collection(db, 'todos')
+export { auth, db, MotoGp };
+export const MotoGpRef = collection(db, 'motoGp')

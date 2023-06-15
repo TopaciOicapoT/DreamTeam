@@ -31,12 +31,6 @@ const routes = createRouter({
             component: () => import('../views/CreateTeam.vue')
         },
         {
-            path: '/addrider',
-            name: 'addrider',
-            beforeEnter: requiereAuth,
-            component: () => import('../views/AddRider.vue')
-        },
-        {
             path: '/results/',
             name: 'results',
             beforeEnter: requiereAuth,

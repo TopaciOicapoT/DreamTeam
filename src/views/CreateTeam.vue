@@ -8,7 +8,7 @@
         <ul v-else class="list-group">
             <li
             class="list-group-item"
-            v-for="(rider, index) in storeTeams.allRiders"
+            v-for="(rider, index) in storeTeams.ridersMotoGp"
             :key="index"
             >
               {{ rider?.name }}<br> Valor: {{ rider?.value }}.000 $<br>
@@ -36,6 +36,7 @@
             </li>
      
         </ul>
+        <button @click="storeTeams.createTeam">Crear equipo</button>
       </div>
     </div>
 
@@ -50,12 +51,11 @@ import { useTeams } from "../stores/teams";
 import { useCollection } from 'vuefire'
 import { collection } from 'firebase/firestore'
 import { db } from "../Services/FirebaseService";
-const allRiders = useCollection(collection(db, 'ridersDataBase'))
+const ridersMotoGp = useCollection(collection(db, 'ridersDataBase'))
 const storeTeams = useTeams();
 
 const dollars = ref(0)
 const userTeam = storeTeams.userTeam;
-const riders = storeTeams.riders;
 const totalPoint = ref(0);
 const listPoints = []
 const suma = (rider) => {
@@ -83,9 +83,10 @@ const remove = (rider) =>{
   dollars.value = storeTeams.dollars
   
 }
+
 onMounted(async()=>{
-  if (storeTeams.allRiders.length === 0) {  
-    storeTeams.getAllRiders(); 
+  if (storeTeams.ridersMotoGp.length === 0) {  
+    storeTeams.getRidersMotoGp(); 
   }
   dollars.value = storeTeams.dollars
 })
@@ -109,12 +110,16 @@ onMounted(async()=>{
         background-color: orange;
         border-radius: 5px;
         padding: 10px;
+        place-items: center;
         color: black;
       }
       .list-group{
+        display: block;
+        text-align: center;
         
         .list-group-item{
           border: 2px solid rgb(0, 0, 0) !important;
+          list-style: none;
         }
       }
     }

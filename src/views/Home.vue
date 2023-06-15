@@ -1,7 +1,8 @@
 <template>
   <h1 class="title1">DREAM TEAM</h1>
   <div class="grid-container">
-    <div v-for="({rider}, index) in riders" :key="index" class="card">
+    <h2>Equipo moto GP del usuario</h2>
+    <div v-for="(rider, index) in riders" :key="index" class="card">
       <a-card
         style="display: block"
         :title="rider?.name"
@@ -15,15 +16,14 @@
           </a-col>
           <a-col :span="16">
             <a-space size="small" class="card-text">
-              <a-typography-text>Age {{ rider?.age }}</a-typography-text>
               <a-typography-text
                 ellipsis
-                :content="`Country: ${rider?.country}`"
+                :content="`Country: ${rider?.nationality}`"
                 style="max-width: 120px"
               />
               <a-typography-text
                 ellipsis
-                :content="`Team: ${rider?.team}`"
+                :content="`Team: ${rider?.team.name}`"
                 style="max-width: 120px"
               />
             </a-space>
@@ -38,11 +38,17 @@ import "../assets/styles.scss";
 import { useCollection } from 'vuefire'
 import { collection } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'
+import { useTeams } from "../stores/teams.js"
+import { onMounted } from "vue";
 
-// Inicializo riders
-const db = useFirestore()
-const riders = useCollection(collection(db, 'ridersDataBase'))
+const dbTeams = useTeams()
+const riders = dbTeams.userTeamMGP
 
+onMounted(()=>{
+  dbTeams.getRidersMotoGp()
+  dbTeams.getTeamMGP()
+ 
+})
 </script>
 
 <style lang="scss" scoped>

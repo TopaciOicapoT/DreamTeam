@@ -3,67 +3,82 @@ import axios from 'axios';
 import { ref } from 'vue';
 import router from '../router/routes';
 import TeamsMockup from "../mockups/TeamsMockup.json"
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore/lite';
-import { auth, db, todos } from '../Services/FirebaseService';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
+import { auth, db, MotoGp } from '../Services/FirebaseService';
 
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userTeam: ref([]),
+    userTeamId: ref([]),
     confirmAddRiderTeam: true,
     dollars: ref(250),
     riders: ref([]),
-    allRiders: [],
+    ridersMotoGp: [],
+    userTeamMGP: [],
     isLoading: false,
     isFetching: ref(false),
     isError: ref(false),
     data: ref(null),
     error: ref(null),
-    allRidersTodo: todos
+    valor: ref(0)
   }),
   actions: {
-    async getAllRiders() {
-      if (this.allRiders.length !== 0) {
+    async getRidersMotoGp() {
+      if (this.ridersMotoGp.length !== 0) {
         return;
       }
       this.isLoading = true;
       try {
-        // const q = query(collection(db, 'ridersDataBase'))
-        // const querySnapshot = await getDocs(q);
-        // querySnapshot.forEach(doc => {
-        //   this.allRiders.push({
-        //     id: doc.id,
-        //     ...doc.data()
-          // })
-        // })
-        this.allRidersTodo.forEach((rider)=>{
-          this.allRiders.push(rider.rider)
-        })
+        const docRefMotoGp = doc(db, "summaryMotoGp", "summary");
+        const docMotoGp = await getDoc(docRefMotoGp);
+        if (docMotoGp.exists()) {
+          const summaryMotoGp = docMotoGp.data()
+          summaryMotoGp.stage.competitors.forEach((rider)=>{
+            if(rider.result.points && rider.result.races >= 3 ){
+              this.valor = Math.floor(rider.result.points *1.5) 
+            }else{
+              this.valor= 2
+            }
+            rider.result.points
+            this.ridersMotoGp.push({
+              ...rider,
+              value:this.valor
+            })
+          })
+          return this.ridersMotoGp
+        } else {
+          console.log("no existe el documento")
+        }
 
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode)
-        console.log("getAllRiders " , errorMessage)
+        console.log("getRidersMotoGp " , errorMessage)
       } finally {
         this.isLoading = false
       }
-      this.allRiders.sort(function (a, b){
-
-        return b.value - a.value
-      })
     },
-    // async updateRiders(rider) {
-    //   try {
-    //     let rd = {rider} 
-    //     let riderId=rd.rider.id.toString()      
-    //     await setDoc(doc(db, "ridersDataBase", riderId), rd)
-    //   } catch (error) {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     console.log(errorCode)
-    //     console.log("upDateRiders ", errorMessage)
-    //   }
-    // },
+    async getTeamMGP(){
+      if (this.userTeamMGP.length!= 0) {
+        return
+      }
+      try {
+        const docRefTeamMGP = doc(db, "userTeam", auth.currentUser.uid);
+        const docTeamMGP= await getDoc(docRefTeamMGP);
+        const teamMGP = docTeamMGP.data()
+        Object.keys(teamMGP).forEach(rId =>{
+          let objetId = teamMGP[rId]
+          this.ridersMotoGp.forEach((rider)=>{
+            if (rider.id == objetId) {
+              this.userTeamMGP.push(rider)
+            }
+          })
+        })
+      } catch (error) {
+        console.log("getTeamMGP",error.message)
+      }
+    },
 
     async getTodos() {
       this.isLoading = true;
@@ -106,15 +121,15 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     addRiderTeam(rider) {
-      console.log(rider)
+      // console.log(rider)
       this.confirmAddRiderTeam= false
       if (this.userTeam.length < 3) {
         if (!this.userTeam.includes(rider)) {
           if (this.dollars >= rider.value) {
             this.userTeam.push(rider)
+            this.userTeamId.push(rider.id)
             const dolares = this.dollars - rider.value
             this.confirmAddRiderTeam= true
-            
             return this.dollars = dolares
 
           } else {
@@ -138,5 +153,22 @@ export const useTeams = defineStore('useTeams', {
       this.dollars = dolares
 
     },
+    async createTeam(){
+      if (this.userTeam.length != 3) {
+        alert("El equipo debe tener tres pilotos")
+        return
+      }
+      try {
+
+        const objectMotoGp = this.userTeamId.reduce((team, riderId)=>{
+          console.log(riderId)
+          team[riderId] = riderId
+          return team
+        }, {})
+        await setDoc(doc(db, "userTeam", auth.currentUser.uid ), objectMotoGp )
+      } catch (error) {
+        console.log("createTeam ", error.message )
+      }
+    }
   },
 })
