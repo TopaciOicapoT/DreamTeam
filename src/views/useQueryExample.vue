@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useQuery } from '@tanstack/vue-query'
 
@@ -54,4 +54,4 @@ export default defineComponent({
   font-weight: bold;
   color: green;
 }
-</style>
+</style> -->

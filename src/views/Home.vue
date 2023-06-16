@@ -44,12 +44,15 @@ import { onMounted } from "vue";
 const dbTeams = useTeams()
 const riders = dbTeams.userTeamMGP
 
-onMounted(()=>{
-  dbTeams.getUsers()
-  dbTeams.getRidersMotoGp()
-  dbTeams.getTeamMGP()
+dbTeams.getUsers()
+dbTeams.getRidersMotoGp()
+dbTeams.getTeamMGP()
+// onMounted(()=>{
+//   dbTeams.getUsers()
+//   dbTeams.getRidersMotoGp()
+//   dbTeams.getTeamMGP()
  
-})
+// })
 </script>
 
 <style lang="scss" scoped>

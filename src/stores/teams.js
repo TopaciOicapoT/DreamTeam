@@ -10,30 +10,35 @@ export const useTeams = defineStore('useTeams', {
     userTeam: ref([]),
     userTeamId: ref([]),
     confirmAddRiderTeam: true,
-    dollars: ref(),
+    dollars: ref(0),
     riders: ref([]),
     ridersMotoGp: [],
-    userTeamMGP: [],
+    userTeamMGP: ref([]),
     ridersMoto2: [],
     userTeamM2: [],
-    isLoading: false,
+    isLoading: true,
     valor: ref(0)
   }),
   actions: {
     async getUsers(){
-      if (this.userDbData != 0) {
+      if (this.userDbData.length >0) {
         return
       }
+      this.isLoading=true
       try {
         const docRefUsers = doc(db, "users", auth.currentUser.uid);
         const docUsers = await getDoc(docRefUsers);
         if (docUsers.exists()) {
           const usersDb = docUsers.data()
           this.userDbData.push(usersDb)
-          console.log(this.userDbData)
+          this.dollars= this.userDbData[0].money
+          console.log(this.dollars)
         }
       } catch (error) {
         console.log(error)
+      }finally{
+
+        this.isLoading=false
       }
     },
     async getRidersMotoGp() {
@@ -109,10 +114,11 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     async getTeamMGP(){
-      if (this.userTeamMGP.length=== 3) {
+      if (this.userTeamMGP.length > 0) {
         return
       }
-    
+      
+      this.isLoading = true;
       try {
         const docRefTeamMGP = doc(db, "userTeamMGP", auth.currentUser.uid);
         const docTeamMGP= await getDoc(docRefTeamMGP);
@@ -122,17 +128,20 @@ export const useTeams = defineStore('useTeams', {
             let objetId = teamMGP[rId]
             this.ridersMotoGp.forEach((rider)=>{
               if (rider.id == objetId) {
-                this.userTeamMGP.push(rider)
+                 this.userTeamMGP.push(rider)
               }
             })
           })
         }
       } catch (error) {
         console.log("getTeamMGP",error.message)
+      }finally{
+        this.isLoading = false;
       }
     },
 
     addRiderTeam(rider) {
+      // console.log(this.dollars)
       this.confirmAddRiderTeam= false
       if (this.userTeam.length < 3) {
         if (!this.userTeam.includes(rider)) {
@@ -140,8 +149,9 @@ export const useTeams = defineStore('useTeams', {
             this.userTeam.push(rider)
             this.userTeamId.push(rider.id)
             const dolares = this.dollars - rider.value
+            console.log(dolares)
             this.confirmAddRiderTeam= true
-            return this.dollars = dolares
+            this.dollars = dolares
 
           } else {
             return alert("No tienes fondos suficientes 🔻")
@@ -162,6 +172,7 @@ export const useTeams = defineStore('useTeams', {
       this.userTeam.splice(index, 1)
       const dolares = this.dollars + rider.value
       this.dollars = dolares
+      console.log("Vuelves a tener ",this.dollars)
 
     },
     async createTeamMGP(){

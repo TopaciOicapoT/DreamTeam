@@ -1,6 +1,6 @@
 <script setup>
   import './assets/styles.scss'
-  import { RouterLink, RouterView } from 'vue-router'
+  import { RouterView } from 'vue-router'
   import Footer from './components/Footer.vue';
   import Header from './components/Header.vue'
   import VerticalNav from './components/VerticalNav.vue'
