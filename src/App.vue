@@ -4,6 +4,9 @@
   import Footer from './components/Footer.vue';
   import Header from './components/Header.vue'
   import VerticalNav from './components/VerticalNav.vue'
+
+
+  
 </script>
 
 <template>

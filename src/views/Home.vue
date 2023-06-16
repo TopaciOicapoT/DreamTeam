@@ -45,6 +45,7 @@ const dbTeams = useTeams()
 const riders = dbTeams.userTeamMGP
 
 onMounted(()=>{
+  dbTeams.getUsers()
   dbTeams.getRidersMotoGp()
   dbTeams.getTeamMGP()
  

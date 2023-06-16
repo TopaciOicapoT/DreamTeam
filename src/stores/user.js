@@ -1,8 +1,9 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { defineStore } from 'pinia';
-import { auth } from '../Services/FirebaseService';
+import { auth, db } from '../Services/FirebaseService';
 import router from '../router/routes';
 import {useTeams} from './teams'
+import { doc, setDoc } from 'firebase/firestore';
 
 
 
@@ -23,6 +24,16 @@ export const useUserStore = defineStore("userStore", {
                     email: user.email,
                     uid: user.uid
                 }
+                await setDoc(doc(db, "users", auth.currentUser.uid ),
+                {
+                  mail: this.userData.email,
+                  money: 750,
+                  rol: "player",
+                  totalPoints: 0,
+                  name: "userDefault"
+
+                }
+                )
             } catch (error) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
@@ -40,7 +51,6 @@ export const useUserStore = defineStore("userStore", {
                     email: user.email,
                     uid: user.uid
                 }
-                
                 router.push("/")
             } catch (error) {
                 const errorCode = error.code;
