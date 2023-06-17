@@ -1,8 +1,7 @@
 <template>
   <h1 class="title1">DREAM TEAM</h1>
   <div class="grid-container">
-    <h2>Equipo moto GP del usuario</h2>
-    <div v-for="(rider, index) in riders" :key="index" class="card">
+    <div v-for="(rider, index) in dbTeams.ridersMotoGp" :key="index" class="card">
       <a-card
         style="display: block"
         :title="rider?.name"
@@ -39,20 +38,18 @@ import { useCollection } from 'vuefire'
 import { collection } from 'firebase/firestore'
 import { useFirestore } from 'vuefire'
 import { useTeams } from "../stores/teams.js"
-import { onMounted } from "vue";
 
 const dbTeams = useTeams()
-const riders = dbTeams.userTeamMGP
+
 
 dbTeams.getUsers()
 dbTeams.getRidersMotoGp()
+dbTeams.getRidersMoto2()
+dbTeams.getRidersMoto3()
 dbTeams.getTeamMGP()
-// onMounted(()=>{
-//   dbTeams.getUsers()
-//   dbTeams.getRidersMotoGp()
-//   dbTeams.getTeamMGP()
- 
-// })
+dbTeams.getTeamM2()
+dbTeams.getTeamM3()
+
 </script>
 
 <style lang="scss" scoped>
