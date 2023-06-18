@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import router from '../router/routes';
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
-import { auth, db, MotoGp } from '../Services/FirebaseService';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where, setDoc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../Services/FirebaseService';
+import {useUserStore} from './user'
 
 export const useTeams = defineStore('useTeams', {
   state: () => ({
@@ -61,9 +62,11 @@ export const useTeams = defineStore('useTeams', {
             rider.result.points
             this.ridersMotoGp.push({
               ...rider,
-              value:this.valor
+              value:this.valor,
+              category: summaryMotoGp.stage.category.name
             })
           })
+
           return this.ridersMotoGp
         } else {
           console.log("no existe el documento")
@@ -97,7 +100,8 @@ export const useTeams = defineStore('useTeams', {
             rider.result.points
             this.ridersMoto2.push({
               ...rider,
-              value:this.valor
+              value:this.valor,
+              category: summaryMoto2.stage.category.name
             })
           })
           return this.ridersMoto2
@@ -133,7 +137,8 @@ export const useTeams = defineStore('useTeams', {
             rider.result.points
             this.ridersMoto3.push({
               ...rider,
-              value:this.valor
+              value:this.valor,
+              category: summaryMoto3.stage.category.name
             })
           })
           return this.ridersMoto3
@@ -227,7 +232,7 @@ export const useTeams = defineStore('useTeams', {
     },
 
     addRiderTeam(rider) {
-      // console.log(this.dollars)
+      console.log(this.dollars)
       this.confirmAddRiderTeam= false
       if (this.userTeam.length < 3) {
         if (!this.userTeam.includes(rider)) {
@@ -235,9 +240,9 @@ export const useTeams = defineStore('useTeams', {
             this.userTeam.push(rider)
             this.userTeamId.push(rider.id)
             const dolares = this.dollars - rider.value
-            console.log(dolares)
             this.confirmAddRiderTeam= true
             this.dollars = dolares
+            console.log(this.dollars)
 
           } else {
             return alert("No tienes fondos suficientes 🔻")
@@ -279,10 +284,22 @@ export const useTeams = defineStore('useTeams', {
         await setDoc(doc(db, "userTeamMGP", auth.currentUser.uid ), objectMotoGp )
         await setDoc(doc(db, "users", auth.currentUser.uid ),
         {
+          mail: this.userDbData[0].mail,
+          money: 750,
+          rol: this.userDbData[0].rol,
+          totalPoints: this.userDbData[0].totalPoints,
+          name: this.userDbData[0].name
+
+        }
+        )
+        await updateDoc(doc(db, "users", auth.currentUser.uid ),
+        {
           money:this.dollars
           
         }
         )
+        this.userTeam=[]
+        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamMGP ", error.message )
       }finally{
@@ -306,6 +323,24 @@ export const useTeams = defineStore('useTeams', {
           return team
         }, {})
         await setDoc(doc(db, "userTeamM2", auth.currentUser.uid ), objectMoto2 )
+        await setDoc(doc(db, "users", auth.currentUser.uid ),
+        {
+          mail: this.userDbData[0].mail,
+          money: 750,
+          rol: this.userDbData[0].rol,
+          totalPoints: this.userDbData[0].totalPoints,
+          name: this.userDbData[0].name
+
+        }
+        )
+        await updateDoc(doc(db, "users", auth.currentUser.uid ),
+        {
+          money:this.dollars
+          
+        }
+        )
+        this.userTeam=[]
+        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM2 ", error.message )
       }finally{
@@ -329,6 +364,25 @@ export const useTeams = defineStore('useTeams', {
           return team
         }, {})
         await setDoc(doc(db, "userTeamM3", auth.currentUser.uid ), objectMoto3 )
+
+        await setDoc(doc(db, "users", auth.currentUser.uid ),
+        {
+          mail: this.userDbData[0].mail,
+          money: 750,
+          rol: this.userDbData[0].rol,
+          totalPoints: this.userDbData[0].totalPoints,
+          name: this.userDbData[0].name
+
+        }
+        )
+        await updateDoc(doc(db, "users", auth.currentUser.uid ),
+        {
+          money:this.dollars
+          
+        }
+        )
+        this.userTeam=[]
+        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM3 ", error.message )
       }finally{

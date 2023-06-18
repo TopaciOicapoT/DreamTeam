@@ -36,7 +36,7 @@
         </ul>
       </div>
     </div>
-    <div>
+    <div >
       <h1 class="title1">Pilotos moto 2</h1>
       <div v-if="storeTeams.userTeamM2.length === 0" class="box">
         <h3 class="box-title">Moto 2</h3>
@@ -49,7 +49,7 @@
           >
             {{ rider?.name }}<br />
             Valor: {{ rider?.value }}.000 $<br />
-            <button @click="add(rider)" class="btn btn-primary mb-2 mt-3">
+            <button @click="add(rider)" v-if="storeTeams.userTeamMGP.length > 0 " class="btn btn-primary mb-2 mt-3">
               Añadir
             </button>
           </li>
@@ -76,7 +76,7 @@
 
     <!-- @@@@@@@@@@@@@@@@ -->
 
-    <div>
+    <div >
       <h1 class="title1">Pilotos moto 3</h1>
       <div v-if="storeTeams.userTeamM3.length === 0" class="box">
         <h3 class="box-title">Moto 3</h3>
@@ -89,7 +89,7 @@
           >
             {{ rider?.name }}<br />
             Valor: {{ rider?.value }}.000 $<br />
-            <button @click="add(rider)" class="btn btn-primary mb-2 mt-3">
+            <button @click="add(rider)" v-if="storeTeams.userTeamMGP.length > 0 && storeTeams.userTeamM2.length > 0" class="btn btn-primary mb-2 mt-3">
               Añadir
             </button>
           </li>
@@ -116,7 +116,7 @@
     <!-- @@@@@@@@@@@@@@@@ -->
     <div>
       <h1 class="title1">Tu equipo</h1>
-      <h2 v-if="dollars">Dineros {{ dollars }}.000 cucas.</h2>
+      <h2 >Dineros {{ dollars }}.000 cucas.</h2>
       <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
       <div class="box">
         <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
@@ -128,7 +128,7 @@
             v-for="(rider, index) in userTeam"
             :key="index"
           >
-            {{ rider?.name }} {{ rider?.value }} <br />
+            {{ rider?.name }} <br> {{ rider?.value }}.000 <br />
             <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">
               Eliminar
             </button>
@@ -136,18 +136,20 @@
         </ul>
         <button @click="create">Crear equipo</button>
       </div>
+
+     <button v-if="auth.currentUser.uid == 'BHneJ9GYwhXDqITGfr3aeyD2zAB3'" @click="resetDb">Reiniciar equipos y dineros</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
-import router from "../router/routes";
+import {useUserStore} from "../stores/user"
+import { auth } from "../Services/FirebaseService";
 
 const storeTeams = useTeams();
 const dollars = ref(0);
-dollars.value = storeTeams.userDbData[0]?.money;
 
 const userTeam = storeTeams.userTeam;
 const totalPoint = ref(0);
@@ -164,6 +166,7 @@ const add = (rider) => {
   if (storeTeams.confirmAddRiderTeam) {
     suma(rider);
   }
+  dollars.value = storeTeams.dollars
 };
 const remove = (rider) => {
   let element = rider;
@@ -171,44 +174,76 @@ const remove = (rider) => {
   totalPoint.value -= rider.value;
   storeTeams.removeRiderTeam(rider);
   listPoints.splice(index, 1);
+  dollars.value = storeTeams.dollars
 };
 const create = () => {
-  if (storeTeams.userTeamMGP.length === 0) {
+  if (storeTeams.userTeamMGP.length === 0 && storeTeams.userTeam[0].category == 'MotoGP') {
     storeTeams.createTeamMGP();
+    
   }
   if (
     storeTeams.userTeamMGP.length === 3 &&
-    storeTeams.userTeamM2.length === 0
-  ) {
+    storeTeams.userTeamM2.length === 0 && storeTeams.userTeam[0].category == 'Moto2'
+    ) {
+    console.log("2")
     storeTeams.createTeamM2();
   }
   if (
     storeTeams.userTeamMGP.length === 3 &&
     storeTeams.userTeamM2.length === 3 &&
-    storeTeams.userTeamM3.length === 0
-  ) {
-    storeTeams.createTeamM3();
+    storeTeams.userTeamM3.length === 0 && storeTeams.userTeam[0].category == 'Moto3'
+    ) {
+      console.log("3")
+      storeTeams.createTeamM3();
   }
 };
 
-onMounted(async () => {
-  storeTeams.getUsers();
-  if (storeTeams.ridersMoto3.length === 0) {
-    await storeTeams.getRidersMoto3();
+const resetDb = ()=>{
+  console.log("RESET, No en verdad no, hay que hacer esta función")
+} 
+
+onMounted( () => {
+  function ejecutarFunciones() {
+    if (storeTeams.userDbData.length === 0) {
+      storeTeams.getUsers();
+      
+    }
+    if (storeTeams.ridersMoto3.length === 0) {
+      storeTeams.getRidersMoto3();
+    }
+    if (storeTeams.ridersMoto2.length === 0) {
+       storeTeams.getRidersMoto2();
+      }
+    if (storeTeams.ridersMotoGp.length === 0) {
+       storeTeams.getRidersMotoGp();
+    }
+    if (storeTeams.userTeamMGP.length === 0) {
+       storeTeams.getTeamMGP();
+      }
+    if (storeTeams.userTeamM2.length === 0) {
+      storeTeams.getTeamM2();
+    }
+    if (storeTeams.userTeamM3.length === 0) {
+      storeTeams.getTeamM3();
+    }   
+    
   }
-  if (storeTeams.ridersMoto2.length === 0) {
-    await storeTeams.getRidersMoto2();
-  }
-  if (storeTeams.ridersMotoGp.length === 0) {
-    await storeTeams.getRidersMotoGp();
-  }
-  const reloading = localStorage.getItem("reloading");
-  if (reloading) {
-    localStorage.removeItem("reloading");
-    router.push("/");
-  } else {
-    localStorage.setItem("reloading", "true");
-  }
+  setTimeout(ejecutarFunciones, 1000)
+  window.addEventListener("scroll", () => {
+    if (dollars.value === 0) {
+      dollars.value = storeTeams.userDbData[0]?.money;
+      
+    }
+  });
+  window.addEventListener("click", () => {
+    if (dollars.value === 0) {
+      dollars.value = storeTeams.userDbData[0]?.money;
+      
+    }
+   
+
+    
+  });  
 });
 </script>
 

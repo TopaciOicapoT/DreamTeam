@@ -31,6 +31,12 @@ const routes = createRouter({
             component: () => import('../views/CreateTeam.vue')
         },
         {
+            path: '/confirmcreateteam',
+            name: 'confirmcreateteam',
+            beforeEnter: requiereAuth,
+            component: () => import('../views/confirmCreateTeam.vue')
+        },
+        {
             path: '/results/',
             name: 'results',
             beforeEnter: requiereAuth,
