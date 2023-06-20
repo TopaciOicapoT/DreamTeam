@@ -14,7 +14,7 @@ import {useUserStore} from "../stores/user"
 const userStore = useUserStore()
 
 </script>
-<style>
+<style scoped>
     .vertical-nav {
         display: flex;
         flex-direction: column;
@@ -35,7 +35,6 @@ const userStore = useUserStore()
         height: 50px;
         width: 100%;
         background-color: rgba(255,255,255,0.05);
-        /* border: 2px solid red; */
         margin-bottom: 10px;
         padding: 0 10px;
     }

@@ -1,6 +1,6 @@
 <template>
   <h1 class="title1">DREAM TEAM</h1>
-  <div v-if="visible" class="grid-container">
+  <div v-if="dbTeams.isLoading" class="grid-container">
     <div v-for="(rider, index) in ridersMgp" :key="index" class="card">
       <a-card
         style="display: block"
@@ -45,7 +45,6 @@ import { onMounted, ref } from 'vue';
 
 const dbTeams = useTeams()
 const db = useFirestore()
-const visible = ref(false)
 const ridersMgp = ref("0")
 const getMGP = async ()=>{
   ridersMgp.value = await summaryMotoGp.data.value.stage.competitors
@@ -58,7 +57,7 @@ onMounted(() => {
   function ejecutarFunciones() {
     if(ridersMgp.value === "0"){
       getMGP()
-      visible.value = true
+     
   
     }
   }

@@ -20,11 +20,9 @@
   </a-layout>
 </template>
 
-<style lang="scss">
-  .carousel{
-    max-height: 200px;
-    overflow: hidden;
-  }
+<style  lang="scss" scoped>
+.ant-layout{
+  width: auto ;
   .ant-layout-footer {
     background-color: rgba(255,255,255,0.05);
     padding: 30px;
@@ -34,5 +32,6 @@
     height: 100%;
     padding: 50px;
   }
+}
 </style>
 
