@@ -394,20 +394,15 @@ const create = () => {
     storeTeams.createTeamMGP();
   }
   if (
-    storeTeams.userTeamMGP.length === 3 &&
     storeTeams.userTeamM2.length === 0 &&
     storeTeams.teamM2[0].category == "Moto2"
   ) {
-    console.log("2");
     storeTeams.createTeamM2();
   }
   if (
-    storeTeams.userTeamMGP.length === 3 &&
-    storeTeams.userTeamM2.length === 3 &&
     storeTeams.userTeamM3.length === 0 &&
     storeTeams.teamM3[0].category == "Moto3"
   ) {
-    console.log("3");
     storeTeams.createTeamM3();
   }
 };
