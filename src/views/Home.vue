@@ -53,6 +53,7 @@ const getMGP = async ()=>{
 }
 
 
+
 onMounted(() => {
   function ejecutarFunciones() {
     if(ridersMgp.value === "0"){

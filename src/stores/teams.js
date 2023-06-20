@@ -8,8 +8,12 @@ import {useUserStore} from './user'
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userDbData: [],
-    userTeam: ref([]),
-    userTeamId: ref([]),
+    teamMGP: ref([]),
+    teamM2: ref([]),
+    teamM3: ref([]),
+    userTeamIdMPG: ref([]),
+    userTeamIdM2: ref([]),
+    userTeamIdM3: ref([]),
     confirmAddRiderTeam: true,
     dollars: ref(0),
     riders: ref([]),
@@ -104,6 +108,7 @@ export const useTeams = defineStore('useTeams', {
               category: summaryMoto2.stage.category.name
             })
           })
+   
           return this.ridersMoto2
         } else {
           console.log("no existe el documento")
@@ -232,18 +237,39 @@ export const useTeams = defineStore('useTeams', {
     },
 
     addRiderTeam(rider) {
-      console.log(this.dollars)
+      // console.log(this.dollars)
       this.confirmAddRiderTeam= false
-      if (this.userTeam.length < 3) {
-        if (!this.userTeam.includes(rider)) {
+      if (this.teamMGP.length < 3) {
+        if (!this.teamMGP.includes(rider)) {
           if (this.dollars >= rider.value) {
-            this.userTeam.push(rider)
-            this.userTeamId.push(rider.id)
+            if (rider.category === "MotoGP") {
+              this.teamMGP.push(rider)
+              this.userTeamIdMGP.push(rider.id)
+              console.log(rider.id)
+              const dolares = this.dollars - rider.value
+              this.confirmAddRiderTeam= true
+              this.dollars = dolares
+              console.log(this.dollars)
+            }else if(rider.category === "Moto2"){
+              this.teamM2.push(rider)
+              this.userTeamIdM2.push(rider.id)
+              const dolares = this.dollars - rider.value
+              this.confirmAddRiderTeam= true
+              this.dollars = dolares
+              console.log(this.dollars)
+              
+            }else if(rider.category === "Moto3"){}
+            this.teamM3.push(rider)
+            this.userTeamIdM3.push(rider.id)
             const dolares = this.dollars - rider.value
             this.confirmAddRiderTeam= true
             this.dollars = dolares
             console.log(this.dollars)
 
+            
+            console.log(this.teamMGP)
+            console.log(this.teamM2)
+            console.log(this.teamM3)
           } else {
             return alert("No tienes fondos suficientes 🔻")
           }
@@ -259,15 +285,15 @@ export const useTeams = defineStore('useTeams', {
     removeRiderTeam(rider) {
       console.log(rider.value)
       const element = rider
-      const index = this.userTeam.indexOf(element)
-      this.userTeam.splice(index, 1)
+      const index = this.teamMGP.indexOf(element)
+      this.teamMGP.splice(index, 1)
       const dolares = this.dollars + rider.value
       this.dollars = dolares
       console.log("Vuelves a tener ",this.dollars)
 
     },
     async createTeamMGP(){
-      if (this.userTeam.length != 3) {
+      if (this.teamMGP.length != 3) {
         alert("El equipo debe tener tres pilotos")
         return
       }
@@ -298,17 +324,14 @@ export const useTeams = defineStore('useTeams', {
           
         }
         )
-        this.userTeam=[]
+        this.teamMGP=[]
         router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamMGP ", error.message )
-      }finally{
-        this.userTeam.value = []
-
       }
     },
     async createTeamM2(){
-      if (this.userTeam.length != 3) {
+      if (this.teamMGP.length != 3) {
         alert("El equipo debe tener tres pilotos")
         return
       }
@@ -339,17 +362,14 @@ export const useTeams = defineStore('useTeams', {
           
         }
         )
-        this.userTeam=[]
+        this.teamMGP=[]
         router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM2 ", error.message )
-      }finally{
-        this.userTeam.value = []
-   
       }
     },
     async createTeamM3(){
-      if (this.userTeam.length != 3) {
+      if (this.teamMGP.length != 3) {
         alert("El equipo debe tener tres pilotos")
         return
       }
@@ -381,13 +401,10 @@ export const useTeams = defineStore('useTeams', {
           
         }
         )
-        this.userTeam=[]
+        this.teamMGP=[]
         router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM3 ", error.message )
-      }finally{
-        this.userTeam.value = []
-   
       }
     },
   },
