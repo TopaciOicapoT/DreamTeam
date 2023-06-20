@@ -8,14 +8,15 @@ import {useUserStore} from './user'
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userDbData: [],
+
     teamMGP: ref([]),
     teamM2: ref([]),
     teamM3: ref([]),
-    userTeamIdMPG: ref([]),
+
+    userTeamIdMGP: ref([]),
     userTeamIdM2: ref([]),
     userTeamIdM3: ref([]),
-    confirmAddRiderTeam: true,
-    dollars: ref(0),
+
     riders: ref([]),
     ridersMotoGp: [],
     userTeamMGP: [],
@@ -24,6 +25,8 @@ export const useTeams = defineStore('useTeams', {
     ridersMoto3: [],
     userTeamM3: [],
     isLoading: true,
+    dollars: ref(0),
+    confirmAddRiderTeam: true,
     valor: ref(0)
   }),
   actions: {
@@ -239,57 +242,89 @@ export const useTeams = defineStore('useTeams', {
     addRiderTeam(rider) {
       // console.log(this.dollars)
       this.confirmAddRiderTeam= false
-      if (this.teamMGP.length < 3) {
-        if (!this.teamMGP.includes(rider)) {
-          if (this.dollars >= rider.value) {
-            if (rider.category === "MotoGP") {
+  
+      if (this.dollars >= rider.value) {
+        if (rider.category === "MotoGP") {
+              if (!this.teamMGP.includes(rider)) {
+              console.log("MGP")
               this.teamMGP.push(rider)
               this.userTeamIdMGP.push(rider.id)
-              console.log(rider.id)
               const dolares = this.dollars - rider.value
               this.confirmAddRiderTeam= true
               this.dollars = dolares
               console.log(this.dollars)
+            } else {
+              return alert("Ese piloto ya esta en tu equipo 👍")
+            }
             }else if(rider.category === "Moto2"){
-              this.teamM2.push(rider)
-              this.userTeamIdM2.push(rider.id)
-              const dolares = this.dollars - rider.value
-              this.confirmAddRiderTeam= true
-              this.dollars = dolares
-              console.log(this.dollars)
+              if (!this.teamM2.includes(rider)) {
+                console.log("M2")
+                this.teamM2.push(rider)
+                this.userTeamIdM2.push(rider.id)
+                const dolares = this.dollars - rider.value
+                this.confirmAddRiderTeam= true
+                this.dollars = dolares
+                console.log(this.dollars)
+                console.log(this.userTeamIdM2)
+              } else {
+                return alert("Ese piloto ya esta en tu equipo 👍")
+              }
               
-            }else if(rider.category === "Moto3"){}
-            this.teamM3.push(rider)
-            this.userTeamIdM3.push(rider.id)
-            const dolares = this.dollars - rider.value
-            this.confirmAddRiderTeam= true
-            this.dollars = dolares
-            console.log(this.dollars)
+            }else if(rider.category === "Moto3"){
+              if (!this.teamM3.includes(rider)) {
+                console.log("M3")
+                this.teamM3.push(rider)
+                this.userTeamIdM3.push(rider.id)
+                const dolares = this.dollars - rider.value
+                this.confirmAddRiderTeam= true
+                this.dollars = dolares
+                console.log(this.dollars)
 
-            
-            console.log(this.teamMGP)
-            console.log(this.teamM2)
-            console.log(this.teamM3)
+              } else {
+                return alert("Ese piloto ya esta en tu equipo 👍")
+              }
+            }else{
+              console.log("No existe ese piloto")
+            }
           } else {
             return alert("No tienes fondos suficientes 🔻")
           }
 
-        } else {
-          return alert("Ese piloto ya esta en tu equipo 👍")
-        }
-
-      } else {
-        return alert("Has llegado al límite de pilotos 🏍️")
-      }
     },
     removeRiderTeam(rider) {
-      console.log(rider.value)
-      const element = rider
-      const index = this.teamMGP.indexOf(element)
-      this.teamMGP.splice(index, 1)
-      const dolares = this.dollars + rider.value
-      this.dollars = dolares
-      console.log("Vuelves a tener ",this.dollars)
+
+      if (rider.category === "MotoGP") {
+        let element = rider
+        let index = this.teamMGP.indexOf(element)
+        this.teamMGP.splice(index, 1)
+        const dolares = this.dollars + rider.value
+        this.dollars = dolares
+        console.log("Vuelves a tener ",this.dollars)
+        console.log("moto gp")
+        
+      } else if(rider.category === "Moto2"){
+        let element = rider
+        let index = this.teamM2.indexOf(element)
+        this.teamM2.splice(index, 1)
+        const dolares = this.dollars + rider.value
+        this.dollars = dolares
+        console.log("Vuelves a tener ",this.dollars)
+        console.log("moto 2")
+      } else if(rider.category === "Moto3"){
+        let element = rider
+        let index = this.teamM3.indexOf(element)
+        this.teamM3.splice(index, 1)
+        const dolares = this.dollars + rider.value
+        this.dollars = dolares
+        console.log("Vuelves a tener ",this.dollars)
+        console.log("moto 3")
+
+      }else{
+
+      }
+        
+      
+
 
     },
     async createTeamMGP(){
@@ -303,7 +338,7 @@ export const useTeams = defineStore('useTeams', {
       console.log("Create MGP")
       try {
 
-        const objectMotoGp = this.userTeamId.reduce((team, riderId)=>{
+        const objectMotoGp = this.userTeamIdMGP.reduce((team, riderId)=>{
           team[riderId] = riderId
           return team
         }, {})
@@ -331,7 +366,7 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     async createTeamM2(){
-      if (this.teamMGP.length != 3) {
+      if (this.teamM2.length != 3) {
         alert("El equipo debe tener tres pilotos")
         return
       }
@@ -341,7 +376,7 @@ export const useTeams = defineStore('useTeams', {
       console.log("Create M2")
       try {
 
-        const objectMoto2 = this.userTeamId.reduce((team, riderId)=>{
+        const objectMoto2 = this.userTeamIdM2.reduce((team, riderId)=>{
           team[riderId] = riderId
           return team
         }, {})
@@ -362,14 +397,14 @@ export const useTeams = defineStore('useTeams', {
           
         }
         )
-        this.teamMGP=[]
+        this.teamM2=[]
         router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM2 ", error.message )
       }
     },
     async createTeamM3(){
-      if (this.teamMGP.length != 3) {
+      if (this.teamM3.length != 3) {
         alert("El equipo debe tener tres pilotos")
         return
       }
@@ -379,7 +414,7 @@ export const useTeams = defineStore('useTeams', {
       console.log("Create 3")
       try {
 
-        const objectMoto3 = this.userTeamId.reduce((team, riderId)=>{
+        const objectMoto3 = this.userTeamIdM3.reduce((team, riderId)=>{
           team[riderId] = riderId
           return team
         }, {})
@@ -401,11 +436,51 @@ export const useTeams = defineStore('useTeams', {
           
         }
         )
-        this.teamMGP=[]
+        this.teamM3=[]
         router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM3 ", error.message )
       }
     },
+    async resetTeamsDb(){
+      try {
+        const docRefMGP = doc(db, 'userTeamMGP', auth.currentUser.uid)
+        const docRefM2 = doc(db, 'userTeamM2', auth.currentUser.uid)
+        const docRefM3 = doc(db, 'userTeamM3', auth.currentUser.uid)
+        const docMGP = await getDoc(docRefMGP)
+        const docM2 = await getDoc(docRefM2)
+        const docM3 = await getDoc(docRefM3)
+  
+        if (docMGP.exists()) {
+          await deleteDoc(docRefMGP)
+          
+        } else {
+          console.log("no existe el documento en Moto GP")
+          
+        }
+        if (docM2.exists()) {
+          await deleteDoc(docRefM2)
+          
+        } else {
+          console.log("no existe el documento en Moto 2")
+        }
+        if (docM3.exists()) {
+          await deleteDoc(docRefM3)
+          
+        } else {
+          console.log("no existe el documento en Moto 3")
+        }
+
+        await updateDoc(doc(db, "users", auth.currentUser.uid ),
+        {
+          money: 750
+          
+        }
+        )
+        
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
   },
 })

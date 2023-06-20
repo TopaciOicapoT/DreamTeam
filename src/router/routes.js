@@ -43,11 +43,6 @@ const routes = createRouter({
             component: () => import('../views/results.vue')
         },
         {
-            path: '/confirmdeleted',
-            name: 'confirmdeleted',
-            component: () => import('../views/ConfirmDeleted.vue')
-        },
-        {
             path: '/register',
             name: 'register',
             component: () => import('../views/register.vue')

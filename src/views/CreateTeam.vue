@@ -58,9 +58,7 @@
             Valor: {{ rider?.value }}.000 $<br />
             <button
               @click="add(rider)"
-              v-if="
-                storeTeams.teamM2.length != 3
-              "
+              v-if="storeTeams.teamM2.length != 3"
               class="btn btn-primary mb-2 mt-3"
             >
               Añadir
@@ -106,11 +104,7 @@
             Valor: {{ rider?.value }}.000 $<br />
             <button
               @click="add(rider)"
-              v-if="
-                storeTeams.teamMGP.length === 3 &&
-                storeTeams.teamM2.length === 3 &&
-                storeTeams.teamM2.length != 3
-              "
+              v-if="storeTeams.teamM3.length != 3"
               class="btn btn-primary mb-2 mt-3"
             >
               Añadir
@@ -120,7 +114,6 @@
       </div>
 
       <!-- PILOTOS EN EL EQUIPO DEL USUARIO -->
-
 
       <div v-if="storeTeams.userTeamM3.length === 3" class="box">
         <h3 class="box-title">Mi equipo Moto 3</h3>
@@ -146,24 +139,70 @@
     <h1 class="title1">Tu equipo</h1>
     <h2>Dineros {{ dollars }}.000 cucas.</h2>
     <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
-    <div class="box">
-      <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
-        MotoGP
-      </h3>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          v-for="(rider, index) in storeTeams?.teamMGP"
-          :key="index"
-        >
-          {{ rider?.name }} <br />
-          {{ rider?.value }}.000 <br />
-          <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">
-            Eliminar
-          </button>
-        </li>
-      </ul>
-      <button @click="create">Crear equipo</button>
+    <div class="box-teams">
+      <div class="box">
+        <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
+          MotoGP
+        </h3>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            v-for="(rider, index) in storeTeams?.teamMGP"
+            :key="index"
+          >
+            {{ rider?.name }} <br />
+            {{ rider?.value }}.000 <br />
+            <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">
+              Eliminar
+            </button>
+          </li>
+        </ul>
+        <button v-if="storeTeams.userTeamMGP.length < 3" :disabled="storeTeams.teamMGP.length < 3" @click="create">
+          Crear equipo
+        </button>
+      </div>
+      <div class="box">
+        <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
+          Moto 2
+        </h3>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            v-for="(rider, index) in storeTeams?.teamM2"
+            :key="index"
+          >
+            {{ rider?.name }} <br />
+            {{ rider?.value }}.000 <br />
+            <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">
+              Eliminar
+            </button>
+          </li>
+        </ul>
+        <button v-if="storeTeams.userTeamM2.length < 3" :disabled="storeTeams.teamM2.length < 3" @click="create">
+          Crear equipo
+        </button>
+      </div>
+      <div class="box">
+        <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
+          Moto 3
+        </h3>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            v-for="(rider, index) in storeTeams?.teamM3"
+            :key="index"
+          >
+            {{ rider?.name }} <br />
+            {{ rider?.value }}.000 <br />
+            <button @click="remove(rider)" class="btn btn-danger mb-2 mt-3">
+              Eliminar
+            </button>
+          </li>
+        </ul>
+        <button v-if="storeTeams.userTeamM3.length < 3" :disabled="storeTeams.teamM3.length < 3" @click="create">
+          Crear equipo
+        </button>
+      </div>
     </div>
 
     <button
@@ -241,14 +280,13 @@ const create = () => {
 };
 
 const resetDb = () => {
-  console.log("RESET, No en verdad no, hay que hacer esta función");
+  storeTeams.resetTeamsDb();
 };
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
     if (dollars.value === 0) {
       dollars.value = storeTeams.userDbData[0]?.money;
-      console.log(storeTeams.teamMGP);
     }
   });
   window.addEventListener("click", () => {
@@ -299,5 +337,11 @@ onMounted(() => {
   display: grid;
   place-content: center;
   margin: 2rem;
+  .box-teams {
+    display: flex;
+    place-content: center;
+    padding: 2rem;
+    margin: 2rem;
+  }
 }
 </style>
