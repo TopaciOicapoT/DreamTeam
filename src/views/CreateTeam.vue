@@ -42,17 +42,7 @@
         <h3 class="box-title">Mi equipo Moto GP</h3>
         <span>Puntuación total: {{ totalPoint }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
-        <!-- <ul v-else class="list-group">
-          <li
-            class="list-group-item"
-            v-for="(rider, index) in storeTeams.userTeamMGP"
-            :key="index"
-          >
-            {{ rider?.name }}<br />
-            Puntuación: {{ rider?.result.points }}<br />
-            Valor: {{ rider?.value }}.000 $<br />
-          </li>
-        </ul> -->
+ 
 
         <div
           v-else
@@ -64,12 +54,11 @@
             :title="rider?.name"
             size="middle"
             class="rider-card"
-            :extra="`Precio: ${rider?.value}.000 $`"
           >
           <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
-                :content="`Puntos: ${rider?.result.points}`"
+                :content="`Puntos: ${rider?.result?.points}`"
                 style="max-width: 120px"
               />
               </a-space>
@@ -120,17 +109,26 @@
         <h3 class="box-title">Mi equipo Moto 2</h3>
         <span>Puntuación total: {{ totalPoint }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
-        <ul v-else class="list-group">
-          <li
-            class="list-group-item"
-            v-for="(rider, index) in storeTeams.userTeamM2"
-            :key="index"
+        <div
+          v-else
+          v-for="(rider, index) in storeTeams.userTeamM2"
+          :key="index"
+        >
+          <a-card
+            style="display: block"
+            :title="rider?.name"
+            size="middle"
+            class="rider-card"
           >
-            {{ rider?.name }}<br />
-            Puntuación: {{ rider?.result.points }}<br />
-            Valor: {{ rider?.value }}.000 $<br />
-          </li>
-        </ul>
+          <a-space size="middle" class="card-text">
+              <a-typography-text
+                ellipsis
+                :content="`Puntos: ${rider?.result.points}`"
+                style="max-width: 120px"
+              />
+              </a-space>
+          </a-card>
+        </div>
       </div>
     </div>
 
@@ -179,17 +177,26 @@
         <h3 class="box-title">Mi equipo Moto 3</h3>
         <span>Puntuación total: {{ totalPoint }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
-        <ul v-else class="list-group">
-          <li
-            class="list-group-item"
-            v-for="(rider, index) in storeTeams.userTeamM3"
-            :key="index"
+        <div
+          v-else
+          v-for="(rider, index) in storeTeams.userTeamM3"
+          :key="index"
+        >
+          <a-card
+            style="display: block"
+            :title="rider?.name"
+            size="middle"
+            class="rider-card"
           >
-            {{ rider?.name }}<br />
-            Puntuación: {{ rider?.result.points }}<br />
-            Valor: {{ rider?.value }}.000 $<br />
-          </li>
-        </ul>
+          <a-space size="middle" class="card-text">
+              <a-typography-text
+                ellipsis
+                :content="`Puntos: ${rider?.result?.points}`"
+                style="max-width: 120px"
+              />
+              </a-space>
+          </a-card>
+        </div>
       </div>
     </div>
 
@@ -197,7 +204,7 @@
   </a-layout-content>
   <div class="myTeam">
     <h1 class="title1">Tu equipo</h1>
-    <h2>Fondos: {{ dollars }}.000 $</h2>
+    <h2>Fondos: {{ storeTeams.dollars }}.000 $</h2>
     <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
     <div class="box-teams">
       <div class="box">
@@ -216,7 +223,7 @@
             <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
-                :content="`Puntuación: ${rider?.result.points}`"
+                :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
               <a-button
@@ -260,7 +267,7 @@
             <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
-                :content="`Puntuación: ${rider?.result.points}`"
+                :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
               <a-button
@@ -304,7 +311,7 @@
             <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
-                :content="`Puntuación: ${rider?.result.points}`"
+                :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
               <a-button
@@ -350,7 +357,6 @@ import { onMounted, ref } from "vue";
 import { useTeams } from "../stores/teams";
 import { useUserStore } from "../stores/user";
 import { auth } from "../Services/FirebaseService";
-import { defineComponent } from "vue";
 import { message } from "ant-design-vue";
 
 const storeTeams = useTeams();
@@ -361,7 +367,6 @@ storeTeams.getTeamM3();
 storeTeams.getRidersMotoGp();
 storeTeams.getRidersMoto2();
 storeTeams.getRidersMoto3();
-const dollars = ref(0);
 const totalPoint = ref(0);
 const listPoints = [];
 const suma = (rider) => {
@@ -376,7 +381,6 @@ const add = (rider) => {
   if (storeTeams.confirmAddRiderTeam) {
     suma(rider);
   }
-  dollars.value = storeTeams.dollars;
 };
 const remove = (rider) => {
   let element = rider;
@@ -384,26 +388,31 @@ const remove = (rider) => {
   totalPoint.value -= rider.value;
   storeTeams.removeRiderTeam(rider);
   listPoints.splice(index, 1);
-  dollars.value = storeTeams.dollars;
 };
 const create = () => {
   if (
     storeTeams.userTeamMGP.length === 0 &&
-    storeTeams.teamMGP[0].category == "MotoGP"
-  ) {
-    storeTeams.createTeamMGP();
+    storeTeams.teamMGP.length === 3 
+    ) {
+      if (storeTeams.teamMGP[0].category == "MotoGP") {
+        storeTeams.createTeamMGP();
+      }
   }
   if (
     storeTeams.userTeamM2.length === 0 &&
-    storeTeams.teamM2[0].category == "Moto2"
-  ) {
-    storeTeams.createTeamM2();
+    storeTeams.teamM2.length === 3 
+    ) {
+      if (storeTeams.teamM2[0].category == "Moto2") {
+        storeTeams.createTeamM2();
+      }
   }
   if (
     storeTeams.userTeamM3.length === 0 &&
-    storeTeams.teamM3[0].category == "Moto3"
-  ) {
-    storeTeams.createTeamM3();
+    storeTeams.teamM3.length === 3 
+    ) {
+      if (storeTeams.teamM3[0].category == "Moto3") {
+        storeTeams.createTeamM3();
+      }
   }
 };
 
@@ -420,18 +429,6 @@ const resetDb = () => {
   storeTeams.resetTeamsDb();
 };
 
-onMounted(() => {
-  window.addEventListener("scroll", () => {
-    if (dollars.value === 0) {
-      dollars.value = storeTeams.userDbData[0]?.money;
-    }
-  });
-  window.addEventListener("click", () => {
-    if (dollars.value === 0) {
-      dollars.value = storeTeams.userDbData[0]?.money;
-    }
-  });
-});
 </script>
 
 <style lang="scss" scoped>

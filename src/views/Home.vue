@@ -1,7 +1,7 @@
 <template>
   <h1 class="title1">DREAM TEAM</h1>
-  <div v-if="dbTeams.isLoading" class="grid-container">
-    <div v-for="(rider, index) in ridersMgp" :key="index" class="card">
+  <div v-if="!dbTeams.isLoading" class="grid-container">
+    <div v-for="(rider, index) in dbTeams.ridersMotoGp" :key="index" class="card">
       <a-card
         style="display: block"
         :title="rider?.name"
@@ -33,37 +33,13 @@
   </div>
 </template>
 <script setup>
-import { useDocument } from 'vuefire'
-import { doc } from 'firebase/firestore'
 import "../assets/styles.scss";
-import { useCollection } from 'vuefire'
-import { collection } from 'firebase/firestore'
-import { useFirestore } from 'vuefire'
 import { useTeams } from "../stores/teams.js"
-import { summaryMotoGp } from "../Services/FirebaseService"
-import { onMounted, ref } from 'vue';
 
 const dbTeams = useTeams()
-const db = useFirestore()
-const ridersMgp = ref("0")
-const getMGP = async ()=>{
-  ridersMgp.value = await summaryMotoGp.data.value.stage.competitors
-  
-}
+dbTeams.getRidersMotoGp()
 
 
-
-onMounted(() => {
-  function ejecutarFunciones() {
-    if(ridersMgp.value === "0"){
-      getMGP()
-     
-  
-    }
-  }
-
-  setTimeout(ejecutarFunciones, 1000)
-});
 </script>
 
 <style lang="scss" scoped>
