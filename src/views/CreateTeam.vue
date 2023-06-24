@@ -1,4 +1,17 @@
 <template>
+  <div
+  v-if="
+    storeTeams.userTeamMGP.length != 0
+  "
+    >
+      <a-card
+        :title="storeTeams?.userPoints"
+        class="totalPoints"
+        size="middle"
+      >
+      </a-card>
+
+    </div>
   <a-layout-content v-if="!storeTeams.isLoading" class="content">
     <div class="ridersBox">
       <h1 class="title1">Pilotos moto GP</h1>
@@ -16,7 +29,7 @@
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Precio: ${rider?.value}.000 $`"
@@ -40,9 +53,8 @@
       <!-- PILOTOS EN EL EQUIPO DEL USUARIO -->
       <div v-if="storeTeams.userTeamMGP.length === 3" class="box">
         <h3 class="box-title">Mi equipo Moto GP</h3>
-        <span>Puntuación total: {{ totalPoint }}</span>
+        <span>Puntuación: {{ storeTeams.teamMgpPoints }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
- 
 
         <div
           v-else
@@ -55,13 +67,13 @@
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Puntos: ${rider?.result?.points}`"
                 style="max-width: 120px"
               />
-              </a-space>
+            </a-space>
           </a-card>
         </div>
       </div>
@@ -76,13 +88,13 @@
           v-for="(rider, index) in storeTeams.ridersMoto2"
           :key="index"
         >
-        <a-card
+          <a-card
             style="display: block"
             :title="rider?.name"
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Precio: ${rider?.value}.000 $`"
@@ -107,7 +119,7 @@
 
       <div v-if="storeTeams.userTeamM2.length === 3" class="box">
         <h3 class="box-title">Mi equipo Moto 2</h3>
-        <span>Puntuación total: {{ totalPoint }}</span>
+        <span>Puntuación: {{ storeTeams.teamM2Points }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
         <div
           v-else
@@ -120,19 +132,18 @@
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Puntos: ${rider?.result.points}`"
                 style="max-width: 120px"
               />
-              </a-space>
+            </a-space>
           </a-card>
         </div>
       </div>
     </div>
 
-    <!-- @@@@@@@@@@@@@@@@ -->
 
     <div class="ridersBox">
       <h1 class="title1">Pilotos moto 3</h1>
@@ -144,13 +155,13 @@
           v-for="(rider, index) in storeTeams.ridersMoto3"
           :key="index"
         >
-        <a-card
+          <a-card
             style="display: block"
             :title="rider?.name"
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Precio: ${rider?.value}.000 $`"
@@ -175,7 +186,7 @@
 
       <div v-if="storeTeams.userTeamM3.length === 3" class="box">
         <h3 class="box-title">Mi equipo Moto 3</h3>
-        <span>Puntuación total: {{ totalPoint }}</span>
+        <span>Puntuación total: {{ storeTeams.teamM3Points }}</span>
         <p v-if="storeTeams.isLoading">Cargando pilotos</p>
         <div
           v-else
@@ -188,21 +199,28 @@
             size="middle"
             class="rider-card"
           >
-          <a-space size="middle" class="card-text">
+            <a-space size="middle" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Puntos: ${rider?.result?.points}`"
                 style="max-width: 120px"
               />
-              </a-space>
+            </a-space>
           </a-card>
         </div>
       </div>
     </div>
-
-    <!-- @@@@@@@@@@@@@@@@ -->
   </a-layout-content>
-  <div class="myTeam">
+
+  <!-- MENU DE CREACIÓN DE EQUIPO -->
+  <div
+    class="myTeam"
+    v-if="
+      storeTeams.userTeamMGP.length === 0 &&
+      storeTeams.userTeamM2.length === 0 &&
+      storeTeams.userTeamM3.length === 0
+    "
+  >
     <h1 class="title1">Tu equipo</h1>
     <h2>Fondos: {{ storeTeams.dollars }}.000 $</h2>
     <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
@@ -211,7 +229,6 @@
         <h3 v-if="storeTeams.userTeamMGP.length === 0" class="box-title">
           MotoGP
         </h3>
-
 
         <div v-for="(rider, index) in storeTeams?.teamMGP" :key="index">
           <a-card
@@ -226,32 +243,12 @@
                 :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
-              <a-button
-                type="primary"
-                shape="circle"
-                @click="remove(rider)"
-              >
+              <a-button type="primary" shape="circle" @click="remove(rider)">
                 Eliminar
               </a-button>
             </a-space>
           </a-card>
         </div>
-        <a-popconfirm
-        title="¿Estas seguro de que este es tu equipo?, una vez creado no podras modificarlo"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="confirm"
-          @cancel="cancel"
-        >
-          <a
-            v-if="
-              storeTeams.userTeamMGP.length < 3 &&
-              storeTeams.teamMGP.length == 3
-            "
-            href="#"
-            >Crear equipo
-          </a>
-        </a-popconfirm>
       </div>
       <div class="box">
         <h3 v-if="storeTeams.userTeamM2.length === 0" class="box-title">
@@ -270,32 +267,12 @@
                 :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
-              <a-button
-                type="primary"
-                shape="circle"
-                @click="remove(rider)"
-                
-              >
+              <a-button type="primary" shape="circle" @click="remove(rider)">
                 Eliminar
               </a-button>
             </a-space>
           </a-card>
         </div>
-        <a-popconfirm
-        title="¿Estas seguro de que este es tu equipo?, una vez creado no podras modificarlo"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="confirm"
-          @cancel="cancel"
-        >
-          <a
-            v-if="
-              storeTeams.userTeamM2.length < 3 && storeTeams.teamM2.length == 3
-            "
-            href="#"
-            >Crear equipo
-          </a>
-        </a-popconfirm>
       </div>
       <div class="box">
         <h3 v-if="storeTeams.userTeamM3.length === 0" class="box-title">
@@ -314,17 +291,22 @@
                 :content="`Precio: ${rider?.value}.000 $`"
                 style="max-width: 120px"
               />
-              <a-button
-                type="primary"
-                shape="circle"
-                @click="remove(rider)"
-                
-              >
+              <a-button type="primary" shape="circle" @click="remove(rider)">
                 Eliminar
               </a-button>
             </a-space>
           </a-card>
         </div>
+      </div>
+    </div>
+    <div
+      v-if="
+        storeTeams.teamMgpConfirm &&
+        storeTeams.teamM2Confirm &&
+        storeTeams.teamM3Confirm
+      "
+    >
+      <a-button type="primary">
         <a-popconfirm
           title="¿Estas seguro de que este es tu equipo?, una vez creado no podras modificarlo"
           ok-text="Yes"
@@ -332,31 +314,20 @@
           @confirm="confirm"
           @cancel="cancel"
         >
-          <a
-            v-if="
-              storeTeams.userTeamM3.length < 3 && storeTeams.teamM3.length == 3
-            "
-            href="#"
-            >Crear equipo
-          </a>
+          <a href="#">Crear equipo </a>
         </a-popconfirm>
-      </div>
+      </a-button>
     </div>
-
-    <button
-      v-if="auth.currentUser.uid == 'BHneJ9GYwhXDqITGfr3aeyD2zAB3'"
-      @click="resetDb"
-    >
-      Reiniciar equipos y dineros
-    </button>
   </div>
+  <form @submit.prevent="resetDb" style="margin-top: 5rem">
+    <button type="submit">Reiniciar equipos y dineros</button>
+  </form>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
+import router from "../router/routes";
 import { useTeams } from "../stores/teams";
-import { useUserStore } from "../stores/user";
-import { auth } from "../Services/FirebaseService";
 import { message } from "ant-design-vue";
 
 const storeTeams = useTeams();
@@ -367,6 +338,7 @@ storeTeams.getTeamM3();
 storeTeams.getRidersMotoGp();
 storeTeams.getRidersMoto2();
 storeTeams.getRidersMoto3();
+storeTeams.updateUserPoints();
 const totalPoint = ref(0);
 const listPoints = [];
 const suma = (rider) => {
@@ -389,49 +361,34 @@ const remove = (rider) => {
   storeTeams.removeRiderTeam(rider);
   listPoints.splice(index, 1);
 };
-const create = () => {
-  if (
-    storeTeams.userTeamMGP.length === 0 &&
-    storeTeams.teamMGP.length === 3 
-    ) {
-      if (storeTeams.teamMGP[0].category == "MotoGP") {
-        storeTeams.createTeamMGP();
-      }
-  }
-  if (
-    storeTeams.userTeamM2.length === 0 &&
-    storeTeams.teamM2.length === 3 
-    ) {
-      if (storeTeams.teamM2[0].category == "Moto2") {
-        storeTeams.createTeamM2();
-      }
-  }
-  if (
-    storeTeams.userTeamM3.length === 0 &&
-    storeTeams.teamM3.length === 3 
-    ) {
-      if (storeTeams.teamM3[0].category == "Moto3") {
-        storeTeams.createTeamM3();
-      }
-  }
-};
 
-const confirm = () => {
-  create()
-  message.success("Este equipo sera guardado ");
+const confirm = async () => {
+  try {
+    storeTeams.createTeamMGP();
+    storeTeams.createTeamM2();
+    storeTeams.createTeamM3();
+    message.success("Este equipo sera guardado ");
+    router.push("/confirmcreateteam");
+  } catch (error) {
+    message.error("Parece que algo ha salido mal, intentalo mas tarde");
+  }
 };
 const cancel = (e) => {
-  console.log(e);
   message.error("Piensalo bien mi pana");
 };
 
 const resetDb = () => {
   storeTeams.resetTeamsDb();
+  setTimeout(() => {
+        location.reload()
+    }, 2500);
 };
-
 </script>
 
 <style lang="scss" scoped>
+.totalPoints {
+  text-align: center;
+}
 .content {
   display: flex;
   background-color: rgb(221, 238, 252);
@@ -457,7 +414,7 @@ const resetDb = () => {
         color: black;
       }
 
-      .rider-card{
+      .rider-card {
         display: flex;
         place-content: center;
         text-align: center;

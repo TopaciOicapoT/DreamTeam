@@ -8,27 +8,41 @@ import { useUserStore } from './user'
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userDbData: [],
+    allUsersDb:[],
+
+    userPoints: ref(0),
+
+    teamMgpPoints: ref(0),
+    teamM2Points: ref(0),
+    teamM3Points: ref(0),
 
     teamMGP: ref([]),
     teamM2: ref([]),
     teamM3: ref([]),
+
+    teamMgpConfirm: (false),
+    teamM2Confirm: (false),
+    teamM3Confirm: (false),
 
     userTeamIdMGP: ref([]),
     userTeamIdM2: ref([]),
     userTeamIdM3: ref([]),
 
     riders: ref([]),
-    ridersMotoGp: [],
-    ridersMoto2: [],
-    ridersMoto3: [],
-    userTeamMGP: [],
-    userTeamM2: [],
-    userTeamM3: [],
+    ridersMotoGp: ref([]),
+    ridersMoto2: ref([]),
+    ridersMoto3: ref([]),
+
+    userTeamMGP: ref([]),
+    userTeamM2: ref([]),
+    userTeamM3: ref([]),
+
     isLoading: true,
     dollars: ref(0),
     confirmAddRiderTeam: true,
     valor: ref(0),
-    pointCero: 0
+    pointCero: 0,
+    allTeamPoints: []
   }),
   actions: {
     async getUsers() {
@@ -43,13 +57,52 @@ export const useTeams = defineStore('useTeams', {
           const usersDb = docUsers.data()
           this.userDbData.push(usersDb)
           this.dollars = this.userDbData[0].money
+          this.userPoints = this.userDbData[0].totalPoints
+        }else{
+          console.log("Fallo al cargar al usuario")
         }
+        const q = query(collection(db, "users"))
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach(doc => {
+          console.log(doc.data().totalPoints)
+         
+          this.allUsersDb.push({
+            id: doc.id,
+            totalPoints:doc.data().totalPoints,
+            name: "",
+          })
+        })
       } catch (error) {
         console.log(error)
       } finally {
 
         this.isLoading = false
       }
+    },
+    async updateUserPoints() {
+      if (
+        this.userTeamMGP.length != 3 &&
+        this.userTeamM2.length != 3 &&
+        this.userTeamM3.length != 3
+      ) {
+        return
+      }
+      try {
+        let userPoints = this.allTeamPoints.reduce((a, b) => {
+          return a + b
+
+        })
+        await updateDoc(doc(db, "users", auth.currentUser.uid),
+          {
+            totalPoints: userPoints
+
+          })
+
+      } catch (error) {
+        console.log(error)
+      }
+
     },
     async getRidersMotoGp() {
       if (this.ridersMotoGp.length !== 0) {
@@ -69,7 +122,7 @@ export const useTeams = defineStore('useTeams', {
             }
             if (rider.result.points == undefined) {
               rider.result.points = 0
-              console.log(rider.result.points)
+
             }
 
             this.ridersMotoGp.push({
@@ -111,7 +164,6 @@ export const useTeams = defineStore('useTeams', {
             }
             if (rider.result.points == undefined) {
               rider.result.points = 0
-              console.log(rider.result.points)
             }
 
             this.ridersMoto2.push({
@@ -153,7 +205,6 @@ export const useTeams = defineStore('useTeams', {
             }
             if (rider.result.points == undefined) {
               rider.result.points = 0
-              console.log(rider.result.points)
             }
 
             this.ridersMoto3.push({
@@ -196,6 +247,20 @@ export const useTeams = defineStore('useTeams', {
             })
           })
         }
+
+        if (this.userTeamMGP.length > 0) {
+          const riderPoint = []
+          this.userTeamMGP.forEach((rider) => {
+            riderPoint.push(rider.result.points)
+            rider.result.points
+          })
+          let total = riderPoint.reduce((a, b) => {
+            return a + b
+          })
+          this.teamMgpPoints = total
+          this.allTeamPoints.push(total)
+
+        }
         this.userTeamMGPLoading = false;
       } catch (error) {
         console.log("getTeamMGP", error.message)
@@ -220,6 +285,19 @@ export const useTeams = defineStore('useTeams', {
               }
             })
           })
+        }
+        if (this.userTeamM2.length > 0) {
+
+          const riderPoint = []
+          this.userTeamM2.forEach((rider) => {
+            riderPoint.push(rider.result.points)
+            rider.result.points
+          })
+          let total = riderPoint.reduce((a, b) => {
+            return a + b
+          })
+          this.teamM2Points = total
+          this.allTeamPoints.push(total)
         }
         this.userTeamMGPLoading = false;
       } catch (error) {
@@ -246,6 +324,20 @@ export const useTeams = defineStore('useTeams', {
             })
           })
         }
+
+        if (this.userTeamM3.length > 0) {
+
+          const riderPoint = []
+          this.userTeamM3.forEach((rider) => {
+            riderPoint.push(rider.result.points)
+            rider.result.points
+          })
+          let total = riderPoint.reduce((a, b) => {
+            return a + b
+          })
+          this.teamM3Points = total
+          this.allTeamPoints.push(total)
+        }
         this.userTeamMGPLoading = false;
       } catch (error) {
         console.log("getTeamM3", error.message)
@@ -253,7 +345,6 @@ export const useTeams = defineStore('useTeams', {
     },
 
     addRiderTeam(rider) {
-      // console.log(this.dollars)
       this.confirmAddRiderTeam = false
 
       if (this.dollars >= rider.value) {
@@ -264,22 +355,28 @@ export const useTeams = defineStore('useTeams', {
             let dolares = this.dollars - rider.value
             this.confirmAddRiderTeam = true
             this.dollars = dolares
+            if (this.teamMGP.length === 3) {
+              this.teamMgpConfirm = true
+            }
+          
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
         } else if (rider.category === "Moto2") {
           if (!this.teamM2.includes(rider)) {
-            console.log("M2")
             this.teamM2.push(rider)
             this.userTeamIdM2.push(rider.id)
             let dolares = this.dollars - rider.value
-            console.log(dolares)
             this.confirmAddRiderTeam = true
             this.dollars = dolares
+            if (this.teamM2.length === 3) {
+              this.teamM2Confirm = true
+            }
+          
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
-
+          
         } else if (rider.category === "Moto3") {
           if (!this.teamM3.includes(rider)) {
             this.teamM3.push(rider)
@@ -287,7 +384,11 @@ export const useTeams = defineStore('useTeams', {
             let dolares = this.dollars - rider.value
             this.confirmAddRiderTeam = true
             this.dollars = dolares
-
+            if (this.teamM3.length === 3) {
+              this.teamM3Confirm = true
+            }
+            
+     
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
@@ -300,30 +401,44 @@ export const useTeams = defineStore('useTeams', {
 
     },
     removeRiderTeam(rider) {
-
+      try {
+        
+      } catch (error) {
+        
+      }
       if (rider.category === "MotoGP") {
         let element = rider
         let index = this.teamMGP.indexOf(element)
         this.teamMGP.splice(index, 1)
+        let indexId = this.userTeamIdMGP.indexOf(element)
+        this.userTeamIdMGP.splice(indexId, 1)
         const dolares = this.dollars + rider.value
         this.dollars = dolares
+        this.teamMgpConfirm = false
 
       } else if (rider.category === "Moto2") {
         let element = rider
         let index = this.teamM2.indexOf(element)
         this.teamM2.splice(index, 1)
+        let indexId = this.userTeamIdM2.indexOf(element)
+        this.userTeamIdM2.splice(indexId, 1)
         const dolares = this.dollars + rider.value
         this.dollars = dolares
+        this.teamM2Confirm = false
+
       } else if (rider.category === "Moto3") {
         let element = rider
         let index = this.teamM3.indexOf(element)
         this.teamM3.splice(index, 1)
+        let indexId = this.userTeamIdM3.indexOf(element)
+        this.userTeamIdM3.splice(indexId, 1)
         const dolares = this.dollars + rider.value
         this.dollars = dolares
+        this.teamM3Confirm = false
+
       } else {
-
+        alert("Error, el piloto no esta seleccionado")
       }
-
 
 
 
@@ -336,24 +451,24 @@ export const useTeams = defineStore('useTeams', {
       if (this.userTeamMGP.length === 3) {
         return
       }
-      console.log("Create MGP")
+
       try {
 
         const objectMotoGp = this.userTeamIdMGP.reduce((team, riderId) => {
           team[riderId] = riderId
           return team
         }, {})
-        await setDoc(doc(db, "userTeamMGP", auth.currentUser.uid), objectMotoGp)
-        await setDoc(doc(db, "users", auth.currentUser.uid),
-          {
-            mail: this.userDbData[0].mail,
-            money: 750,
-            rol: this.userDbData[0].rol,
-            totalPoints: this.userDbData[0].totalPoints,
-            name: this.userDbData[0].name
 
-          }
-        )
+        const riderPoint = []
+        this.teamMGP.forEach((rider) => {
+          riderPoint.push(rider.result.points)
+
+        })
+        let total = riderPoint.reduce((a, b) => {
+          return a + b
+        })
+        this.teamMgpPoints = total
+        await setDoc(doc(db, "userTeamMGP", auth.currentUser.uid), objectMotoGp)
         await updateDoc(doc(db, "users", auth.currentUser.uid),
           {
             money: this.dollars
@@ -361,7 +476,6 @@ export const useTeams = defineStore('useTeams', {
           }
         )
         this.teamMGP = []
-        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamMGP ", error.message)
       }
@@ -374,7 +488,6 @@ export const useTeams = defineStore('useTeams', {
       if (this.userTeamM2.length === 3) {
         return
       }
-      console.log("Create M2")
       try {
 
         const objectMoto2 = this.userTeamIdM2.reduce((team, riderId) => {
@@ -382,16 +495,6 @@ export const useTeams = defineStore('useTeams', {
           return team
         }, {})
         await setDoc(doc(db, "userTeamM2", auth.currentUser.uid), objectMoto2)
-        await setDoc(doc(db, "users", auth.currentUser.uid),
-          {
-            mail: this.userDbData[0].mail,
-            money: 750,
-            rol: this.userDbData[0].rol,
-            totalPoints: this.userDbData[0].totalPoints,
-            name: this.userDbData[0].name
-
-          }
-        )
         await updateDoc(doc(db, "users", auth.currentUser.uid),
           {
             money: this.dollars
@@ -399,7 +502,6 @@ export const useTeams = defineStore('useTeams', {
           }
         )
         this.teamM2 = []
-        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM2 ", error.message)
       }
@@ -412,7 +514,6 @@ export const useTeams = defineStore('useTeams', {
       if (this.userTeamM3.length === 3) {
         return
       }
-      console.log("Create 3")
       try {
 
         const objectMoto3 = this.userTeamIdM3.reduce((team, riderId) => {
@@ -420,17 +521,6 @@ export const useTeams = defineStore('useTeams', {
           return team
         }, {})
         await setDoc(doc(db, "userTeamM3", auth.currentUser.uid), objectMoto3)
-
-        await setDoc(doc(db, "users", auth.currentUser.uid),
-          {
-            mail: this.userDbData[0].mail,
-            money: 750,
-            rol: this.userDbData[0].rol,
-            totalPoints: this.userDbData[0].totalPoints,
-            name: this.userDbData[0].name
-
-          }
-        )
         await updateDoc(doc(db, "users", auth.currentUser.uid),
           {
             money: this.dollars
@@ -438,7 +528,6 @@ export const useTeams = defineStore('useTeams', {
           }
         )
         this.teamM3 = []
-        router.push("/confirmcreateteam")
       } catch (error) {
         console.log("createTeamM3 ", error.message)
       }
@@ -474,7 +563,8 @@ export const useTeams = defineStore('useTeams', {
 
         await updateDoc(doc(db, "users", auth.currentUser.uid),
           {
-            money: 750
+            money: 750,
+            totalPoints: 0
 
           }
         )
