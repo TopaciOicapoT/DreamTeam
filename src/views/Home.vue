@@ -1,20 +1,20 @@
 <template>
   <h1 class="title1">DREAM TEAM</h1>
   <div v-if="!dbTeams.isLoading" class="grid-container">
-    <div v-for="(rider, index) in dbTeams.ridersMotoGp" :key="index" class="card">
+    <div v-for="(user, index) in dbTeams.allUsersDb" :key="index" class="card">
       <a-card
         style="display: block"
-        :title="rider?.name"
+        :title="user?.totalPoints"
         size="small"
         class="rider-card"
-        :extra="`Value: ${rider?.value}`"
+
       >
         <a-row>
           <a-col :span="6">
-            <a-avatar shape="square" :src="rider?.photo" :size="25"> </a-avatar>
-          </a-col>
-          <a-col :span="16">
-            <a-space size="small" class="card-text">
+            <!-- <a-avatar shape="square" :src="rider?.photo" :size="25"> </a-avatar> -->
+          <!-- </a-col>
+          <a-col :span="16"> -->
+            <!-- <a-space size="small" class="card-text">
               <a-typography-text
                 ellipsis
                 :content="`Country: ${rider?.nationality}`"
@@ -25,7 +25,7 @@
                 :content="`Team: ${rider?.team.name}`"
                 style="max-width: 120px"
               />
-            </a-space>
+            </a-space> -->
           </a-col>
         </a-row>
       </a-card>
@@ -33,11 +33,17 @@
   </div>
 </template>
 <script setup>
+import { onMounted } from "vue";
 import "../assets/styles.scss";
 import { useTeams } from "../stores/teams.js"
 
 const dbTeams = useTeams()
-dbTeams.getRidersMotoGp()
+dbTeams.getUsers()
+dbTeams.getTeamMGP();
+dbTeams.getTeamM2();
+dbTeams.getTeamM3();
+dbTeams.updateUserPoints();
+
 
 
 </script>
