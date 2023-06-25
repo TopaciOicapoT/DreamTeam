@@ -27,7 +27,6 @@ export const useTeams = defineStore('useTeams', {
     userTeamIdMGP: ref([]),
     userTeamIdM2: ref([]),
     userTeamIdM3: ref([]),
-
     riders: ref([]),
 
     ridersMotoGpLastYear: ref([]),
@@ -131,10 +130,14 @@ export const useTeams = defineStore('useTeams', {
           summaryMotoGp.stage.competitors.forEach((rider) => {
             let riderFilter = this.ridersMotoGpLastYear.filter(riderLy => riderLy.id.includes(rider.id))
             if (riderFilter.length > 0 && riderFilter[0].result.points) {
-              this.valor = riderFilter[0].result.points
+              let points = riderFilter[0].result.points
+              this.valor = Math.floor(points)
 
-            }else{
+            } else {
               this.valor = 2
+            }
+            if (!rider.result.points) {
+              rider.result.points = 0
             }
             this.ridersMotoGp.push({
               value: this.valor,
@@ -180,11 +183,16 @@ export const useTeams = defineStore('useTeams', {
           summaryMoto2.stage.competitors.forEach((rider) => {
             let riderFilter = this.ridersMoto2LastYear.filter(riderLy => riderLy.id.includes(rider.id))
             if (riderFilter.length > 0 && riderFilter[0].result.points) {
-              this.valor = riderFilter[0].result.points
+              let points = riderFilter[0].result.points
+              this.valor = Math.floor(points)
 
-            }else{
+            } else {
               this.valor = 2
             }
+            if (!rider.result.points) {
+              rider.result.points = 0
+            }
+
             this.ridersMoto2.push({
               value: this.valor,
               category: summaryMoto2.stage.category.name,
@@ -229,10 +237,14 @@ export const useTeams = defineStore('useTeams', {
           summaryMoto3.stage.competitors.forEach((rider) => {
             let riderFilter = this.ridersMoto3LastYear.filter(riderLy => riderLy.id.includes(rider.id))
             if (riderFilter.length > 0 && riderFilter[0].result.points) {
-              this.valor = riderFilter[0].result.points
+              let points = riderFilter[0].result.points
+              this.valor = Math.floor(points)
 
-            }else{
+            } else {
               this.valor = 2
+            }
+            if (!rider.result.points) {
+              rider.result.points = 0
             }
             this.ridersMoto3.push({
               value: this.valor,
@@ -256,10 +268,9 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     async getTeamMGP() {
-      if (this.userTeamMGP.length > 0) {
+      if (this.userTeamMGP.length === 3) {
         return
       }
-
       this.userTeamMGPLoading = true;
       try {
         const docRefTeamMGP = doc(db, "userTeamMGP", auth.currentUser.uid);
@@ -289,13 +300,17 @@ export const useTeams = defineStore('useTeams', {
           this.allTeamPoints.push(total)
 
         }
-        this.userTeamMGPLoading = false;
+
+        return this.allTeamPoints
       } catch (error) {
         console.log("getTeamMGP", error.message)
+      }finally{
+        this.userTeamMGPLoading = false;
+
       }
     },
     async getTeamM2() {
-      if (this.userTeamM2.length > 0) {
+      if (this.userTeamM2.length === 3) {
         return
       }
 
@@ -333,7 +348,7 @@ export const useTeams = defineStore('useTeams', {
       }
     },
     async getTeamM3() {
-      if (this.userTeamM3.length > 0) {
+      if (this.userTeamM3.length === 3) {
         return
       }
 
@@ -591,12 +606,11 @@ export const useTeams = defineStore('useTeams', {
 
         await updateDoc(doc(db, "users", auth.currentUser.uid),
           {
-            money: 750,
-            totalPoints: 0
+            money: 850,
+            totalPoints: 0,
 
           }
         )
-        router.push('/')
       } catch (error) {
         console.log(error.message)
       }

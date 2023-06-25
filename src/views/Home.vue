@@ -4,45 +4,22 @@
     <div v-for="(user, index) in dbTeams.allUsersDb" :key="index" class="card">
       <a-card
         style="display: block"
-        :title="user?.totalPoints"
+        :title="`🏍️ ${user?.name}`"
         size="small"
         class="rider-card"
 
       >
-      {{ user?.name }}
-        <a-row>
-          <a-col :span="6">
-            <!-- <a-avatar shape="square" :src="rider?.photo" :size="25"> </a-avatar> -->
-          <!-- </a-col>
-          <a-col :span="16"> -->
-            <!-- <a-space size="small" class="card-text">
-              <a-typography-text
-                ellipsis
-                :content="`Country: ${rider?.nationality}`"
-                style="max-width: 120px"
-              />
-              <a-typography-text
-                ellipsis
-                :content="`Team: ${rider?.team.name}`"
-                style="max-width: 120px"
-              />
-            </a-space> -->
-          </a-col>
-        </a-row>
+      {{ `Puntuación: ${user?.totalPoints}` }}
       </a-card>
     </div>
   </div>
 </template>
 <script setup>
-import { onMounted } from "vue";
 import "../assets/styles.scss";
 import { useTeams } from "../stores/teams.js"
 
 const dbTeams = useTeams()
 dbTeams.getUsers()
-dbTeams.getTeamMGP();
-dbTeams.getTeamM2();
-dbTeams.getTeamM3();
 dbTeams.updateUserPoints();
 
 
@@ -58,7 +35,8 @@ dbTeams.updateUserPoints();
 }
 
 .card {
-  width: 100%;
+ max-width: 300px;
+ min-width: 150px;
 }
 .card-text {
   display: flex;

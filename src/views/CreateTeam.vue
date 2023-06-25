@@ -1,18 +1,22 @@
 <template>
+
+
+  
   <div
   v-if="
-    storeTeams.userTeamMGP.length != 0
+    !loadingPage
   "
     >
       <a-card
-        :title="storeTeams?.userPoints"
+        :title="`Puntuación total: ${storeTeams?.userPoints}`"
         class="totalPoints"
         size="middle"
-      >
+      > 
       </a-card>
 
     </div>
-  <a-layout-content v-if="!storeTeams.isLoading" class="content">
+    <span v-else>Cargando...</span>
+  <a-layout-content v-if="!loadingPage" class="content">
     <div class="ridersBox">
       <h1 class="title1">Pilotos moto GP</h1>
       <div v-if="storeTeams.userTeamMGP.length === 0" class="box">
@@ -218,7 +222,8 @@
     v-if="
       storeTeams.userTeamMGP.length === 0 &&
       storeTeams.userTeamM2.length === 0 &&
-      storeTeams.userTeamM3.length === 0
+      storeTeams.userTeamM3.length === 0 && 
+      loadingPage === false
     "
   >
     <h1 class="title1">Tu equipo</h1>
@@ -325,11 +330,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 import router from "../router/routes";
 import { useTeams } from "../stores/teams";
 import { message } from "ant-design-vue";
-
+const loadingPage = ref(true)
 const storeTeams = useTeams();
 storeTeams.getUsers();
 storeTeams.getTeamMGP();
@@ -362,7 +367,7 @@ const remove = (rider) => {
   listPoints.splice(index, 1);
 };
 
-const confirm = async () => {
+const confirm =  (() => {
   try {
     storeTeams.createTeamMGP();
     storeTeams.createTeamM2();
@@ -372,7 +377,7 @@ const confirm = async () => {
   } catch (error) {
     message.error("Parece que algo ha salido mal, intentalo mas tarde");
   }
-};
+});
 const cancel = (e) => {
   message.error("Piensalo bien mi pana");
 };
@@ -383,6 +388,25 @@ const resetDb = () => {
         location.reload()
     }, 2500);
 };
+
+const confirmLoading = ()=>{
+  loadingPage.value = false
+
+}
+const getRiders = ()=>{
+  storeTeams.getUsers();
+  storeTeams.getTeamMGP();
+  storeTeams.getTeamM2();
+  storeTeams.getTeamM3();
+  storeTeams.getRidersMotoGp();
+storeTeams.getRidersMoto2();
+storeTeams.getRidersMoto3();
+storeTeams.updateUserPoints();
+}
+
+  setTimeout(getRiders, 800)
+  setTimeout(confirmLoading, 2000)
+
 </script>
 
 <style lang="scss" scoped>

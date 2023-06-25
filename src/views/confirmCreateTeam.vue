@@ -2,10 +2,10 @@
     <div>
         <h1>Tu equipo se ha creado correctamente</h1>
     </div>
-    <div>
-        <span>Volver al inicio 👍</span>
-        <button @click="back">Volver</button>
-    </div>
+    <a-form>
+        <a-form-item>Volver al inicio 👍</a-form-item>
+        <a-button @click="back">Volver</a-button>
+    </a-form>
 </template>
 
 <script setup>
