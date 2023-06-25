@@ -9,6 +9,7 @@
         class="rider-card"
 
       >
+      {{ user?.name }}
         <a-row>
           <a-col :span="6">
             <!-- <a-avatar shape="square" :src="rider?.photo" :size="25"> </a-avatar> -->

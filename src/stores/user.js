@@ -16,7 +16,7 @@ export const useUserStore = defineStore("userStore", {
         userId: null
     }),
     actions: {
-        async registerUser(email, password) {
+        async registerUser(email, password, name) {
             this.loadingUser= true
             try {
                 const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -27,10 +27,10 @@ export const useUserStore = defineStore("userStore", {
                 await setDoc(doc(db, "users", auth.currentUser.uid ),
                 {
                   mail: this.userData.email,
-                  money: 750,
+                  money: 850,
                   rol: "player",
                   totalPoints: 0,
-                  name: "userDefault"
+                  name: name,
 
                 }
                 )

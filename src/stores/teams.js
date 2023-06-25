@@ -8,7 +8,7 @@ import { useUserStore } from './user'
 export const useTeams = defineStore('useTeams', {
   state: () => ({
     userDbData: [],
-    allUsersDb:[],
+    allUsersDb: [],
 
     userPoints: ref(0),
 
@@ -29,6 +29,11 @@ export const useTeams = defineStore('useTeams', {
     userTeamIdM3: ref([]),
 
     riders: ref([]),
+
+    ridersMotoGpLastYear: ref([]),
+    ridersMoto2LastYear: ref([]),
+    ridersMoto3LastYear: ref([]),
+
     ridersMotoGp: ref([]),
     ridersMoto2: ref([]),
     ridersMoto3: ref([]),
@@ -58,19 +63,17 @@ export const useTeams = defineStore('useTeams', {
           this.userDbData.push(usersDb)
           this.dollars = this.userDbData[0].money
           this.userPoints = this.userDbData[0].totalPoints
-        }else{
+        } else {
           console.log("Fallo al cargar al usuario")
         }
         const q = query(collection(db, "users"))
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach(doc => {
-          console.log(doc.data().totalPoints)
-         
           this.allUsersDb.push({
             id: doc.id,
-            totalPoints:doc.data().totalPoints,
-            name: "",
+            totalPoints: doc.data().totalPoints,
+            name: doc.data().name,
           })
         })
       } catch (error) {
@@ -112,26 +115,34 @@ export const useTeams = defineStore('useTeams', {
       try {
         const docRefMotoGp = doc(db, "summaryMotoGp", "summary");
         const docMotoGp = await getDoc(docRefMotoGp);
+
+        const docRefMotoGpLastYear = doc(db, "summaryMotoGpLastYear", "summary");
+        const docMotoGpLastYear = await getDoc(docRefMotoGpLastYear);
+        if (docMotoGpLastYear.exists()) {
+
+          const summaryMgpLastYear = docMotoGpLastYear.data()
+          summaryMgpLastYear.summaryMotoGp.forEach((rider) => {
+            this.ridersMotoGpLastYear.push(rider)
+          })
+        }
+
         if (docMotoGp.exists()) {
           const summaryMotoGp = docMotoGp.data()
           summaryMotoGp.stage.competitors.forEach((rider) => {
-            if (rider.result.points && rider.result.races >= 3) {
-              this.valor = Math.floor(rider.result.points * 1.5)
-            } else {
+            let riderFilter = this.ridersMotoGpLastYear.filter(riderLy => riderLy.id.includes(rider.id))
+            if (riderFilter.length > 0 && riderFilter[0].result.points) {
+              this.valor = riderFilter[0].result.points
+
+            }else{
               this.valor = 2
             }
-            if (rider.result.points == undefined) {
-              rider.result.points = 0
-
-            }
-
             this.ridersMotoGp.push({
-              ...rider,
               value: this.valor,
-              category: summaryMotoGp.stage.category.name
+              category: summaryMotoGp.stage.category.name,
+              ...rider,
             })
           })
-
+          this.valor = 0
           return this.ridersMotoGp
         } else {
           console.log("no existe el documento")
@@ -154,25 +165,33 @@ export const useTeams = defineStore('useTeams', {
       try {
         const docRefMoto2 = doc(db, "summaryMoto2", "summary");
         const docMoto2 = await getDoc(docRefMoto2);
+        const docRefMoto2LastYear = doc(db, "summaryMoto2LastYear", "summary");
+        const docMoto2LastYear = await getDoc(docRefMoto2LastYear);
+        if (docMoto2LastYear.exists()) {
+
+          const summaryM2LastYear = docMoto2LastYear.data()
+          summaryM2LastYear.summaryMoto2.forEach((rider) => {
+            this.ridersMoto2LastYear.push(rider)
+          })
+        }
+
         if (docMoto2.exists()) {
           const summaryMoto2 = docMoto2.data()
           summaryMoto2.stage.competitors.forEach((rider) => {
-            if (rider.result.points && rider.result.races >= 3) {
-              this.valor = Math.floor(rider.result.points * 1.5)
-            } else {
+            let riderFilter = this.ridersMoto2LastYear.filter(riderLy => riderLy.id.includes(rider.id))
+            if (riderFilter.length > 0 && riderFilter[0].result.points) {
+              this.valor = riderFilter[0].result.points
+
+            }else{
               this.valor = 2
             }
-            if (rider.result.points == undefined) {
-              rider.result.points = 0
-            }
-
             this.ridersMoto2.push({
-              ...rider,
               value: this.valor,
-              category: summaryMoto2.stage.category.name
+              category: summaryMoto2.stage.category.name,
+              ...rider,
             })
           })
-
+          this.valor = 0
           return this.ridersMoto2
         } else {
           console.log("no existe el documento")
@@ -195,24 +214,33 @@ export const useTeams = defineStore('useTeams', {
       try {
         const docRefMoto3 = doc(db, "summaryMoto3", "summary");
         const docMoto3 = await getDoc(docRefMoto3);
+        const docRefMoto3LastYear = doc(db, "summaryMoto3LastYear", "summary");
+        const docMoto3LastYear = await getDoc(docRefMoto3LastYear);
+        if (docMoto3LastYear.exists()) {
+
+          const summaryM3LastYear = docMoto3LastYear.data()
+          summaryM3LastYear.summaryMoto3.forEach((rider) => {
+            this.ridersMoto3LastYear.push(rider)
+          })
+        }
+
         if (docMoto3.exists()) {
           const summaryMoto3 = docMoto3.data()
           summaryMoto3.stage.competitors.forEach((rider) => {
-            if (rider.result.points && rider.result.races >= 3) {
-              this.valor = Math.floor(rider.result.points * 1.5)
-            } else {
+            let riderFilter = this.ridersMoto3LastYear.filter(riderLy => riderLy.id.includes(rider.id))
+            if (riderFilter.length > 0 && riderFilter[0].result.points) {
+              this.valor = riderFilter[0].result.points
+
+            }else{
               this.valor = 2
             }
-            if (rider.result.points == undefined) {
-              rider.result.points = 0
-            }
-
             this.ridersMoto3.push({
-              ...rider,
               value: this.valor,
-              category: summaryMoto3.stage.category.name
+              category: summaryMoto3.stage.category.name,
+              ...rider,
             })
           })
+          this.valor = 0
           return this.ridersMoto3
         } else {
           console.log("no existe el documento")
@@ -358,7 +386,7 @@ export const useTeams = defineStore('useTeams', {
             if (this.teamMGP.length === 3) {
               this.teamMgpConfirm = true
             }
-          
+
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
@@ -372,11 +400,11 @@ export const useTeams = defineStore('useTeams', {
             if (this.teamM2.length === 3) {
               this.teamM2Confirm = true
             }
-          
+
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
-          
+
         } else if (rider.category === "Moto3") {
           if (!this.teamM3.includes(rider)) {
             this.teamM3.push(rider)
@@ -387,8 +415,8 @@ export const useTeams = defineStore('useTeams', {
             if (this.teamM3.length === 3) {
               this.teamM3Confirm = true
             }
-            
-     
+
+
           } else {
             return alert("Ese piloto ya esta en tu equipo 👍")
           }
@@ -402,9 +430,9 @@ export const useTeams = defineStore('useTeams', {
     },
     removeRiderTeam(rider) {
       try {
-        
+
       } catch (error) {
-        
+
       }
       if (rider.category === "MotoGP") {
         let element = rider
