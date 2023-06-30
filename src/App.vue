@@ -23,6 +23,8 @@
 <style  lang="scss" scoped>
 .ant-layout{
   width: 100% ;
+  height: 100%;
+
   .ant-layout-footer {
     background-color: rgba(255,255,255,0.05);
     padding: 30px;

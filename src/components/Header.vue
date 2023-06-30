@@ -1,15 +1,13 @@
 <template>
     <a-carousel>
         <template autoplay v-if="!isLoading">
-            <!-- <div> -->
+       
                 <template v-for="(image, index) in randomImages" :key="index">
                     <div className="header-image">
                         <a-image :src="image.src.medium" style="height:200px; object-fit: scale-down;" alt="..." className="img"></a-image>
-                        <!-- <a-image :src="image.src.medium" style="height:100%; object-fit: scale-down;" alt="..." className="img"></a-image>
-                        <a-image :src="image.src.medium" style="height:100%; object-fit: scale-down;" alt="..." className="img"></a-image> -->
                     </div>
                 </template>
-            <!-- </div> -->
+          
         </template>
     <template v-else>
         <span>Loading...</span>
