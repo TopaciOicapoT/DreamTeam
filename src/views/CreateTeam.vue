@@ -7,7 +7,7 @@
     >
     </a-card>
   </div>
-  <span v-else>Cargando...</span>
+  <span class="spin" v-else> <a-spin size="large" /></span>
   <a-layout-content v-if="!loadingPage" class="content">
     <div v-if="storeTeams.userTeamM3.length === 0" class="boxRiders">
       <div>
@@ -16,18 +16,18 @@
           category="Moto GP"
           :ridersList="storeTeams?.ridersMotoGp"
           :categoryTeam="storeTeams?.teamMGP"
-          />
-        </div>
-        <div>
-          <RidersList
+        />
+      </div>
+      <div>
+        <RidersList
           tittleRiders="Pilotos Moto 2"
           category="Moto 2"
           :ridersList="storeTeams?.ridersMoto2"
           :categoryTeam="storeTeams?.teamM2"
-          />
-        </div>
-        <div>
-          <RidersList
+        />
+      </div>
+      <div>
+        <RidersList
           tittleRiders="Pilotos Moto 3"
           category="Moto 3"
           :ridersList="storeTeams?.ridersMoto3"
@@ -42,17 +42,17 @@
           teamTittle="Mi equipo Moto GP"
           :teamRidersList="storeTeams?.userTeamMGP"
           :teamPoints="storeTeams?.teamMgpPoints"
-          />
-        </div>
-        <div>
-          <TeamRiders
+        />
+      </div>
+      <div>
+        <TeamRiders
           teamTittle="Mi equipo Moto 2"
           :teamRidersList="storeTeams?.userTeamM2"
           :teamPoints="storeTeams?.teamM2Points"
-          />
-        </div>
-        <div>
-          <TeamRiders
+        />
+      </div>
+      <div>
+        <TeamRiders
           teamTittle="Mi equipo Moto 3"
           :teamRidersList="storeTeams?.userTeamM3"
           :teamPoints="storeTeams?.teamM3Points"
@@ -70,9 +70,11 @@
       loadingPage === false
     "
   >
-    <h1 class="title1">Tu equipo</h1>
-    <h2>Fondos: {{ storeTeams.dollars }}.000 $</h2>
-    <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
+    <div class="title1">
+      <h1>Tu equipo</h1>
+      <h2>Fondos: {{ storeTeams.dollars }}.000 $</h2>
+      <h3>Puntuación de tu equipo: {{ totalPoint }}</h3>
+    </div>
     <div class="box-teams">
       <TemporalTeam categoryTeam="Moto GP" :actualTeam="storeTeams?.teamMGP" />
       <TemporalTeam categoryTeam="Moto 2" :actualTeam="storeTeams?.teamM2" />
@@ -98,7 +100,7 @@
       </a-button>
     </div>
   </div>
-  <form @submit.prevent="resetDb" style="margin-top: 5rem">
+  <form @submit.prevent="resetDb" style="margin: 5rem">
     <button type="submit">Reiniciar equipos y dineros</button>
   </form>
 </template>
@@ -167,47 +169,38 @@ setTimeout(confirmLoading, 2000);
 .totalPoints {
   text-align: center;
 }
+
+.spin {
+  display: grid;
+  place-content: center;
+  margin-top: 300px;
+}
 .content {
-  display: flex;
-  background-color: rgb(221, 238, 252);
+  display: grid;
+  place-items: center;
+  background-image: url(../../public/img/gifRodillaFila.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   border-radius: 5px;
   max-height: 600px;
-  min-width: 390px;
+  min-width: 100px;
   text-align: center;
-  overflow: auto;
+  overflow: scroll;
   .boxRiders {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     padding: 1rem;
-    width: 100%;
   }
 
   .boxTeamRiders {
     display: flex;
     justify-content: space-evenly;
     padding: 1rem;
-    width: 100%;
   }
 
   .title1 {
     border-bottom: 3px solid gray;
-  }
-
-  .box {
-    padding: 1rem;
-    .box-title {
-      background-color: rgb(143, 143, 143);
-      border-radius: 5px;
-      padding: 10px;
-      text-align: center;
-      color: black;
-    }
-
-    .rider-card {
-      display: flex;
-      place-content: center;
-      text-align: center;
-    }
   }
 }
 .myTeam {
@@ -215,6 +208,15 @@ setTimeout(confirmLoading, 2000);
   overflow: auto;
   text-align: center;
   margin: 2rem;
+  font-size: small;
+  background-image: url(../../public/img/gifNeon.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .title1 {
+    background-color: rgba(147, 147, 147, 0.8);
+  }
   .box-teams {
     display: flex;
     place-content: center;

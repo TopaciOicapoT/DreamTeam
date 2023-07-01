@@ -40,9 +40,6 @@
 
 <script setup>
 import { useTeams } from "../stores/teams";
-const storeTeams = useTeams();
-
-
 defineProps({
     tittleRiders: String,
     category: String,
@@ -50,6 +47,9 @@ defineProps({
     categoryTeam: Array
 
 })
+const storeTeams = useTeams();
+
+
 
 const add = (rider) => {
   storeTeams.addRiderTeam(rider);
@@ -64,22 +64,26 @@ const add = (rider) => {
     width: 100%;
     .title1 {
       border-bottom: 3px solid gray;
+      background-color: #ccc;
     }
-
+    
     .box {
       padding: 1rem;
       .box-title {
+        border: 1px solid black;
         background-color: rgb(143, 143, 143);
         border-radius: 5px;
         padding: 10px;
         text-align: center;
         color: black;
       }
-
+      
       .rider-card {
+        border: 1px solid black;
         display: flex;
         place-content: center;
         text-align: center;
+        background-color: rgb(191, 191, 191);
       }
     }
   }

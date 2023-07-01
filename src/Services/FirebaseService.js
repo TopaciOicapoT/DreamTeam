@@ -16,8 +16,6 @@ const db = getFirestore(firebaseApp)
 const MotoGp = useCollection(collection(db, 'summaryMotoGp'))
 
 const vfdb = useFirestore()
-const summaryMotoGp = useDocument(doc(vfdb, 'summaryMotoGp', 'summary'))
-const summaryMoto2 = useDocument(doc(vfdb, 'summaryMoto2', 'summary'))
-const summaryMoto3 = useDocument(doc(vfdb, 'summaryMoto3', 'summary'))
 
-export { auth, db, summaryMotoGp };
+
+export { auth, db}

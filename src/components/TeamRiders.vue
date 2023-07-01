@@ -50,6 +50,7 @@ defineProps({
         padding: 10px;
         text-align: center;
         color: black;
+        border: 1px solid rgb(6, 0, 0);
       }
 
       .rider-card {
