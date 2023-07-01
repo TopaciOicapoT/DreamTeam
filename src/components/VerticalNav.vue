@@ -24,10 +24,7 @@ const userStore = useUserStore()
     .vertical-nav .btn {
         margin-bottom: 10px;
     }
-    .vertical-nav {
-        display: flex;
-        flex-direction: column;
-    }
+ 
 
     .vertical-nav .btn {
         display: flex;

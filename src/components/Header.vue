@@ -1,17 +1,13 @@
 <template>
-    <a-carousel>
-        <template autoplay v-if="!isLoading">
+    <a-carousel autoplay class="ant-carousel">
+    
        
-                <template v-for="(image, index) in randomImages" :key="index">
-                    <div className="header-image">
-                        <a-image :src="image.src.medium" style="height:200px; object-fit: scale-down;" alt="..." className="img"></a-image>
+                <div class="header-image" v-for="(image, index) in randomImages" :key="index">
+                    <div class="ant-image" >
+                        <a-image  :src="image.src.medium" style="height:200px; object-fit: cover;" alt="..." className="img"></a-image>
                     </div>
-                </template>
-          
-        </template>
-    <template v-else>
-        <span>Loading...</span>
-    </template>
+                </div>
+
     </a-carousel>
 </template>
 <script>
@@ -51,16 +47,24 @@ export default {
   },
 };
 </script>
-<style>
-/* .header-image { */
-/* .header-image{
-  max-height: 250px;
-} */
-.ant-image {
-    /* margin:auto; */
-    display: block  !important;
-    /* height: 100%; */
-    width: 100%;
-    padding: 15px;
-} 
+<style scoped>
+.ant-carousel :deep(.header-image) {
+
+
+margin-left: 25%;
+width: 60% !important;
+}
+
+.header-image{
+  display: grid  !important;
+  place-items: center !important;
+
+}
+
+.ant-carousel :deep(.header-image .ant-image ){
+  width: 100%;
+  margin-top: 1rem;
+
+}
+
 </style>
