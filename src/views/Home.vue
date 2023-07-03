@@ -36,6 +36,7 @@ dbTeams.updateUserPoints();
   background-image: url(../../public/img/gifMotoGp.gif);
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: 400px;
   
   .title{
     border-radius: 10%;

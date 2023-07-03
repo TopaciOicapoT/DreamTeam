@@ -1,5 +1,5 @@
 <template>
-  <a-row>
+  <a-row class="containerLg">
     <a-col :xs="{ span: 24 }" :sm="{ span: 12, offset: 6 }">
       <p v-if="userStore.loadingUser">Loading docs...</p>
 
@@ -100,9 +100,13 @@ const onFinish = async (values) => {
     };
 </script>
 
-<style scoped>
-input {
-  color: rgb(0, 0, 0);
+<style lang="scss" scoped>
+
+.containerLg{
+  margin:3rem;
+  input {
+    color: rgb(0, 0, 0);
+  }
 }
 .containerGR{
   text-align: center;

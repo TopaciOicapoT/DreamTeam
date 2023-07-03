@@ -1,5 +1,8 @@
 <template>
-  <h1 class="text-center">Registrarte</h1>
+    <div class="container">
+
+    
+  <h1 class="text-center">Registrarte aqui</h1>
     <a-row>
         <a-col
             :xs="{ span: 24 }"
@@ -77,6 +80,7 @@
       </a-button>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>    
@@ -138,11 +142,16 @@ const onFinishFailed = (errorInfo) => {
 };
 </script>
 
-<style scoped>
-input {
-  color: rgb(4, 0, 0);
-}
-.containerGL{
-  text-align: center;
+<style lang="scss" scoped>
+
+.container{
+    text-align: center;
+    margin: 3rem;
+    input {
+      color: rgb(4, 0, 0);
+    }
+    .containerGL{
+      text-align: center;
+    }
 }
 </style>

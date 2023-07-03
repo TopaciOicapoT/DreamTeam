@@ -213,8 +213,11 @@ setTimeout(confirmLoading, 2000);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  min-height: 500px;
 
   .title1 {
+    padding: 1rem;
+    max-height: 130px;
     background-color: rgba(147, 147, 147, 0.8);
   }
   .box-teams {
