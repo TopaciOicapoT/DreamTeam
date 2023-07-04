@@ -1,47 +1,96 @@
 <template>
-    <nav class="vertical-nav">
-        <RouterLink v-show="userStore.userLoged" class="btn" to="/">INICIO</RouterLink>
-        <RouterLink v-show="userStore.userLoged" class="btn" to="/createteam">Crear equipo</RouterLink>
-        <RouterLink v-show="userStore.userLoged" class="btn" to="/results">Resultados 2023</RouterLink>               
-        <button v-show="userStore.userLoged" @click="userStore.logoutUser">Logout</button>
-    </nav>
+     <a-layout>
+
+         <a-layout-header
+         class="layout-header"
+         :style="{ position: 'fixed', zIndex: 1, width: '100%' }"
+  >
+    <a-menu
+      class="menu"
+      v-model:selectedKeys="selectedKeys"
+      theme="dark"
+      mode="horizontal"
+      :style="{ lineHeight: '64px' }"
+    >
+    <a-menu-item class="menu-item" v-if="userStore.userLoged" key="1"
+    ><RouterLink to="/">INICIO</RouterLink></a-menu-item
+    >
+    <a-menu-item class="menu-item" v-if="userStore.userLoged" key="2"
+    ><RouterLink to="/createteam">Crear equipo</RouterLink></a-menu-item
+    >
+    <a-menu-item class="menu-item" v-if="!userStore.userLoged" key="3"
+    ><RouterLink to="/login">Loging</RouterLink></a-menu-item
+    >
+    <a-menu-item class="menu-item" v-if="!userStore.userLoged" key="4"
+    ><RouterLink to="/register">Registrarme</RouterLink></a-menu-item
+    >
+    <a-menu-item
+    class="menu-item"
+    v-if="userStore.userLoged"
+    @click="userStore.logoutUser"
+    key="5"
+    >Logout</a-menu-item
+    >
+</a-menu>
+</a-layout-header>
+</a-layout>
 </template>
 <script setup>
-import { RouterLink, useRouter } from 'vue-router'
-import {useUserStore} from "../stores/user"
+import { RouterLink, useRoute } from "vue-router";
+import { useUserStore } from "../stores/user";
+import { computed, onMounted, ref, watch } from "vue";
 
+const userStore = useUserStore();
+const selectedKeys = ref([1]);
 
-const userStore = useUserStore()
+const route = useRoute();
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath === "/") {
+      selectedKeys.value = ["1"];
+    } else if (newPath === "/createteam") {
+      selectedKeys.value = ["2"];
+    } else if (newPath === "/login") {
+      selectedKeys.value = ["3"];
+    } else if (newPath === "/register") {
+      selectedKeys.value = ["4"];
+    }else{
+        selectedKeys.value = ["5"];
 
+    }
+  }
+);
+
+onMounted(() => {
+  watch(
+    () => route.path,
+    (newPath) => {
+      if (newPath === "/") {
+        selectedKeys.value = ["1"];
+      } else if (newPath === "/createteam") {
+        selectedKeys.value = ["2"];
+      } else if (newPath === "/login") {
+        selectedKeys.value = ["3"];
+      } else if (newPath === "/register") {
+        selectedKeys.value = ["4"];
+      }else{
+        selectedKeys.value = ["5"];
+
+    }
+    }
+  );
+});
 </script>
-<style scoped>
-    .vertical-nav {
-        display: flex;
-        flex-direction: column;
-        margin-top: 250px;
-        height: 100vh;
-    }
-    .vertical-nav .btn {
-        margin-bottom: 10px;
-    }
- 
+<style lang="scss" scoped>
+.layout-header {
+  background: black !important;
+  .menu {
+    background: black !important;
 
-    .vertical-nav .btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 50px;
-        width: 100%;
-        background-color: rgba(255,255,255,0.05);
-        margin-bottom: 10px;
-        padding: 0 10px;
+    .menu-item {
+      background: black !important;
     }
-
-    .vertical-nav .btn:first-child {
-        margin-top: 10px;
-    }
-
-    .vertical-nav .btn:last-child {
-        margin-bottom: 10px;
-    }
+  }
+}
 </style>

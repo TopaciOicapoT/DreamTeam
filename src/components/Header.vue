@@ -1,14 +1,17 @@
 <template>
+  <div class="content">
+
     <a-carousel autoplay class="ant-carousel">
     
        
-                <div class="header-image" v-for="(image, index) in randomImages" :key="index">
+                <div class="header-image" style="" v-for="(image, index) in randomImages" :key="index">
                     <div class="ant-image" >
-                        <a-image  :src="image.src.medium" style="height:200px; object-fit: cover;" alt="..." className="img"></a-image>
+                        <a-image style="height:200px; object-fit: cover;"  :src="image.src.medium"  alt="..." class="img"></a-image>
                     </div>
                 </div>
 
     </a-carousel>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -37,6 +40,7 @@ export default {
           per_page: 20,
         },
       });
+      console.log(response.data.photos)
       return response.data.photos;
     };
     const { data: randomImages = [], isLoading } = useQuery(queryKey, queryFn);
@@ -48,23 +52,17 @@ export default {
 };
 </script>
 <style scoped>
+
+
 .ant-carousel :deep(.header-image) {
-
-
-margin-left: 25%;
-width: 60% !important;
+  width: 60% !important;
+  margin-left: 20%;
 }
 
-.header-image{
-  display: grid  !important;
-  place-items: center !important;
-
-}
 
 .ant-carousel :deep(.header-image .ant-image ){
   width: 100%;
   margin-top: 1rem;
-
 }
 
 </style>

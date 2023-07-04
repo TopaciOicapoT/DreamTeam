@@ -178,7 +178,7 @@ setTimeout(confirmLoading, 2000);
 .content {
   display: grid;
   place-items: center;
-  background-image: url(../../public/img/gifRodillaFila.gif);
+  background-image: url(/img/gifRodillaFila.gif);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -187,6 +187,8 @@ setTimeout(confirmLoading, 2000);
   min-width: 100px;
   text-align: center;
   overflow: scroll;
+  margin: 2rem;
+  padding: 1rem;
   .boxRiders {
     display: flex;
     justify-content: space-around;
@@ -209,7 +211,7 @@ setTimeout(confirmLoading, 2000);
   text-align: center;
   margin: 2rem;
   font-size: small;
-  background-image: url(../../public/img/gifNeon.gif);
+  background-image: url(/img/gifNeon.gif);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

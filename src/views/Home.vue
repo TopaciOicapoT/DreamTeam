@@ -32,16 +32,23 @@ dbTeams.updateUserPoints();
 <style lang="scss" scoped>
 
 .body-container{
+  display: grid;
+  place-items: center;
   border-radius: 10%;
-  background-image: url(../../public/img/gifMotoGp.gif);
+  background-image: url(/img/gifMotoGp.gif);
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 400px;
+  margin: 2rem;
+  padding: 1rem;
+ 
   
   .title{
     border-radius: 10%;
+    width: 40%;
     text-align: center;
-    color: rgb(0, 0, 0);
+    color: rgb(206, 206, 206);
+    background: black;
     text-shadow: 2px 2px 2px rgb(115, 114, 114);
   }
   .grid-container {
