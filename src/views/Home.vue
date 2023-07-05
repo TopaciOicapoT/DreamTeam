@@ -45,8 +45,7 @@ dbTeams.updateUserPoints();
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 400px;
-  // margin: 2rem;
-  // padding: 1rem;
+
  
   
   .title{
@@ -56,6 +55,7 @@ dbTeams.updateUserPoints();
     color: rgb(206, 206, 206);
     background: black;
     text-shadow: 2px 2px 2px rgb(115, 114, 114);
+    margin-top: 2rem;
   }
   .grid-container {
     display: grid;
