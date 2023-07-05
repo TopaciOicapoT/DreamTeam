@@ -43,6 +43,12 @@ const routes = createRouter({
             component: () => import('../views/Test.vue')
         },
         {
+            path: '/profile',
+            name: 'profile',
+            beforeEnter: requiereAuth,
+            component: () => import('../views/Perfil.vue')
+        },
+        {
             path: '/results/',
             name: 'results',
             beforeEnter: requiereAuth,

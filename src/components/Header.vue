@@ -40,7 +40,6 @@ export default {
           per_page: 20,
         },
       });
-      console.log(response.data.photos)
       return response.data.photos;
     };
     const { data: randomImages = [], isLoading } = useQuery(queryKey, queryFn);

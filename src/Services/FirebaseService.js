@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, doc  } from 'firebase/firestore'
 import firebaseConfig from './FirebaseConfig.json';
-import { useCollection, useDocument, useFirestore } from "vuefire";
+import { getStorage } from "firebase/storage";
 
 // 
 export const firebaseApp = initializeApp({
@@ -13,9 +13,7 @@ export const firebaseApp = initializeApp({
 
 const auth = getAuth();
 const db = getFirestore(firebaseApp)
-const MotoGp = useCollection(collection(db, 'summaryMotoGp'))
-
-const vfdb = useFirestore()
+const storage = getStorage(firebaseApp);
 
 
-export { auth, db}
+export { auth, db, storage}

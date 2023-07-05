@@ -9,7 +9,7 @@ import "./assets/styles.scss";
 <template>
 
 
-  <a-layout>
+  <a-layout class="container">
     <VerticalNav></VerticalNav>
     <a-layout-header class="ant-header" style="height: 250px"
       ><Header></Header
@@ -30,18 +30,20 @@ import "./assets/styles.scss";
 
 <style lang="scss" scoped>
 
-.ant-header{
- margin-top: 50px !important;
-}
-.ant-layout_main{
-  margin-top: 30px ;
-
-  .ant-layout-footer{
-    background-color: rgba(255, 255, 255, 0.05)
+  .ant-header{
+   margin-top: 50px !important;
   }
-
-
-}
+  .ant-layout_main{
+    margin-top: 30px ;
+      margin: 1rem;
+  padding: 1rem;
+  
+    .ant-layout-footer{
+      background-color: rgba(255, 255, 255, 0.05)
+    }
+  
+  
+  }
 
 
 </style>

@@ -1,9 +1,10 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { defineStore } from 'pinia';
-import { auth, db } from '../Services/FirebaseService';
+import { auth, db, storage } from '../Services/FirebaseService';
 import router from '../router/routes';
 import {useTeams} from './teams'
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 
 
@@ -31,6 +32,7 @@ export const useUserStore = defineStore("userStore", {
                   rol: "player",
                   totalPoints: 0,
                   name: name,
+                
 
                 }
                 )
@@ -43,13 +45,47 @@ export const useUserStore = defineStore("userStore", {
                 this.loadingUser=false
             }
         },
+        async updateUser(name, img) {
+            this.loadingUser = true;
+            try {
+                
+                if(img){
+                    console.log(img)
+                    const storageRef = ref(storage,`perfiles/${this.userData.uid}`);
+                    await uploadBytes(storageRef,img.originFileObj);
+                    const URL = await getDownloadURL(storageRef);
+                    await updateProfile(auth.currentUser, {
+                        photoURL: URL,
+                    });
+                    await updateDoc(doc(db, "users", auth.currentUser.uid),
+                    {
+                        name: name,  
+                        photoURL: URL,
+                        
+                    })
+                }
+                await updateProfile(auth.currentUser, {
+                    displayName: name,
+                });
+                
+                console.log("@@@", URL)
+                console.log("Nombre ", name)
+
+            } catch (error) {
+                console.log(error.code)
+                return error.code
+            }finally{
+                this.loadingUser = false;
+            }
+        },
+
         async loginUser(email, password){
             this.loadingUser= true
             try {
                 const {user}= await signInWithEmailAndPassword(auth, email, password)
                 this.userData = {
                     email: user.email,
-                    uid: user.uid
+                    uid: user.uid,
                 }
                 router.push("/")
             } catch (error) {
@@ -62,6 +98,7 @@ export const useUserStore = defineStore("userStore", {
             }
 
         },
+
         async logoutUser(){
             const teamsDataBase = useTeams()
             teamsDataBase.$reset()
@@ -76,15 +113,21 @@ export const useUserStore = defineStore("userStore", {
                 console.log(errorMessage)
             }finally{
                 this.userLoged=false
+    
             }
         },
+        
         currentUser(){
+            const teamsDb = useTeams()
             return new Promise((resolve, reject)=>{
                 const unsuscribe = onAuthStateChanged(auth, (user)=>{
                     if (user) {
                         this.userData = {
                             email: user.email,
-                            uid: user.uid
+                            uid: user.uid,
+                            displayName :user.displayName,
+                            photoURL: user.photoURL,
+                            
                         }
                         this.userId=auth.currentUser.uid
                         this.userLoged= true

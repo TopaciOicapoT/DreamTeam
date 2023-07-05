@@ -53,6 +53,7 @@ export const useTeams = defineStore('useTeams', {
       if (this.userDbData.length > 0) {
         return
       }
+      const userStore = useUserStore()
       this.isLoading = true
       try {
         const docRefUsers = doc(db, "users", auth.currentUser.uid);
@@ -73,6 +74,8 @@ export const useTeams = defineStore('useTeams', {
             id: doc.id,
             totalPoints: doc.data().totalPoints,
             name: doc.data().name,
+            photoURL: doc.data().photoURL,
+
           })
         })
       } catch (error) {
