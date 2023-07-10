@@ -1,12 +1,15 @@
 <script setup>
 import { RouterView } from "vue-router";
-import Footer from "./components/Footer.vue";
-import Header from "./components/Header.vue";
-import VerticalNav from "./components/VerticalNav.vue";
-import "./assets/styles.scss";
+// import Footer from "./components/Footer.vue";
+// import Header from "./components/Header.vue";
+import NavComponent from "./components/NavComponent.vue"
+// import VerticalNav from "./components/VerticalNav.vue";
+// import "./assets/styles.scss";
+
+
 </script>
 
-<template>
+<!-- <template>
 
 
   <a-layout class="container">
@@ -16,7 +19,7 @@ import "./assets/styles.scss";
     ></a-layout-header>
     <a-layout class="ant-layout_main">
       <a-layout-content class="ant-layout-content">
-        <RouterView></RouterView>
+        
       </a-layout-content>
 
       <a-layout-footer
@@ -26,24 +29,35 @@ import "./assets/styles.scss";
       </a-layout-footer>
     </a-layout>
   </a-layout>
+</template> -->
+
+<template>
+  <a-layout>
+    <!-- Navegacion-->
+    <NavComponent />
+    <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+      <!-- Routing-->
+      <RouterView></RouterView>
+    </a-layout-content>
+    <a-layout-footer >
+      <!-- <Footer></Footer> -->
+    </a-layout-footer>
+  </a-layout>
 </template>
 
-<style lang="scss" scoped>
+<style>
+#components-layout-demo-fixed .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
 
-  .ant-header{
-   margin-top: 50px !important;
-  }
-  .ant-layout_main{
-    margin-top: 30px ;
-      margin: 1rem;
-  padding: 1rem;
-  
-    .ant-layout-footer{
-      background-color: rgba(255, 255, 255, 0.05)
-    }
-  
-  
-  }
-
-
+[data-theme='dark'] .site-layout .site-layout-background {
+  background: #141414;
+}
 </style>

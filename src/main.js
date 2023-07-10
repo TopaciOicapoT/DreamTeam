@@ -2,7 +2,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import router from './router/routes'
+import { routes } from './router/routes'
 import { createPinia } from "pinia"
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -11,7 +11,7 @@ import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './Services/FirebaseService'
 
 const app = createApp(App)
-app.use(router);
+app.use(routes);
 app.use(VueQueryPlugin)
 app.use(Antd)
 app.use(createPinia())
