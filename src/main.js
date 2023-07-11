@@ -10,8 +10,6 @@ import { VueQueryPlugin } from "@tanstack/vue-query";
 import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './Services/FirebaseService'
 import { ConfigProvider } from 'ant-design-vue';
-import themeConfig from './assets/themeConfig'
-// import '../theme.less'
 
 const app = createApp(App)
 app.use(ConfigProvider, {
