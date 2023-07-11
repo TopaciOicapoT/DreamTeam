@@ -555,7 +555,7 @@ export default defineComponent({
       },
     ];
 
-    const transferData = [];
+    const transferData: { key: string; title: string; description: string; }[] = [];
 
     for (let i = 0; i < 20; i++) {
       transferData.push({
