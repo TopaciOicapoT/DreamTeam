@@ -9,7 +9,7 @@ import NavComponent from "./components/NavComponent.vue"
   <a-layout>
     <!-- Navegacion-->
     <NavComponent />
-    <a-layout-content class="p-3 mt-4">
+    <a-layout-content :style="{ padding: '50px 50px', marginTop: '64px' }">
       <!-- Routing-->
       <RouterView></RouterView>
     </a-layout-content>

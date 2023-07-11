@@ -1,16 +1,22 @@
 
 import { createApp } from 'vue'
-import './style.css'
+// import './style.css'
 import App from './App.vue'
 import { routes } from './router/routes'
 import { createPinia } from "pinia"
 import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.less';
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import { VueFire, VueFireAuth } from 'vuefire'
 import { firebaseApp } from './Services/FirebaseService'
+import { ConfigProvider } from 'ant-design-vue';
+import themeConfig from './assets/themeConfig'
+// import '../theme.less'
 
 const app = createApp(App)
+app.use(ConfigProvider, {
+    theme: themeConfig, // Configura el tema predefinido
+  });
 app.use(routes);
 app.use(VueQueryPlugin)
 app.use(Antd)
