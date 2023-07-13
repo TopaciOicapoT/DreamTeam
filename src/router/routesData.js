@@ -2,12 +2,14 @@ export default [
     {
         path: '/',
         name: 'home',
+        title: 'Home Page',
         isMenuItem: true,
         component: () => import('../views/Home.vue')
     },
     {
         path: '/createteam',
         name: 'createteam',
+        title: 'Create Team',
         permission: false,
         isMenuItem: true,
         component: () => import('../views/CreateTeam.vue')
@@ -19,6 +21,7 @@ export default [
     },
     {
         path: '/test',
+        title: 'Test Page',
         name: 'test',
         isMenuItem:true,
         component: () => import('../views/Test.vue')
